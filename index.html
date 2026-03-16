@@ -776,7 +776,7 @@ function generatePDF(){
   svc.items.forEach(i=>{if(i.status)c[i.status]++;else c.pend++;});
   const total=svc.items.length;
   const pw=(W-mg*2-9)/4;
-  [[c.ok,'Conforme',cOk],[c.na,'N/A',cAzure],[c.nok,'Não Conforme',cNok],[c.pend,'Pendente',cMuted]].forEach(([cnt,lbl,col],i)=>{
+  [[c.ok,'Conforme',cOk],[c.na,'Não necessário',cAzure],[c.nok,'Não Conforme',cNok],[c.pend,'Não preenchido',cMuted]].forEach(([cnt,lbl,col],i)=>{
     const px=mg+i*(pw+3);
     doc.setFillColor(255,255,255);doc.setDrawColor(...cLine);doc.roundedRect(px,y,pw,18,3,3,'FD');
     doc.setFillColor(...col);doc.roundedRect(px,y,4,18,2,0,'F');
@@ -802,7 +802,7 @@ function generatePDF(){
     doc.setFillColor(...cInk);doc.roundedRect(mg,y,W-mg*2,tHdr,2,2,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(255,255,255);
     doc.text('#',mg+3,y+5.5);
-    doc.text('QTD',mg+colN+3,y+5.5);
+    doc.text('Quantidade',mg+colN+3,y+5.5);
     doc.text('EQUIPAMENTO',mg+colN+colQty+3,y+5.5);
     doc.text('STATUS',mg+colN+colQty+colName+3,y+5.5);
     doc.text('OBSERVAÇÕES',mg+colN+colQty+colName+colSt+3,y+5.5);
