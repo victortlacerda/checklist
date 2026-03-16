@@ -374,12 +374,14 @@ function loadState(){
     }
   }catch(e){}
   // Build fresh state
-  const services = Array.from({length:NUM_SERVICES},(_,i)=>({
-    id:i+1,
-    name:`Serviço ${i+1}`,
-    local:'', resp:'', date:'',
-    items: defaultItems(i+1)
-  }));
+const serviceNames = ["Sondagem Geotécnica", "Ensaio de PDA", "Prova de Carga", "Instalação de Estacas", "Monitoramento"];
+
+const services = serviceNames.map((name, i) => ({
+  id: i + 1,
+  name: name, // Aqui ele usará os nomes da lista acima
+  local: '', resp: '', date: '',
+  items: defaultItems(i + 1)
+}));
   return {services};
 }
 
