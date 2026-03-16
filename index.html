@@ -346,13 +346,40 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 const NUM_SERVICES  = 5;
 const NUM_EQUIPMENT = 20;
 
-function defaultItems(serviceId){
-  return Array.from({length:NUM_EQUIPMENT},(_,i)=>({
-    id: serviceId * 1000 + (i + 1), 
-    name:`Equipamento ${i+1}`, 
-    status:null, 
-    obs:'', 
-    qty:1
+function defaultItems(serviceId) {
+  let names = [];
+
+  // 1. Ensaio PIT
+  if (serviceId === 1) {
+    names = ["Cabo de conexão", "Martelo de impacto", "Sensor (Acelerômetro)", "Pasta de moldagem", "Unidade de aquisição"];
+  } 
+  // 2. Ensaio PDA
+  else if (serviceId === 2) {
+    names = ["Pile Driving Analyzer (PDI)", "Sensores de força", "Sensores de aceleração", "Cabo de sinal (60m)", "Parafusadeira e brocas", "Ponteiras e parafusos"];
+  }
+  // 3. Ensaio PCE (Prova de Carga Estática)
+  else if (serviceId === 3) {
+    names = ["Macaco Hidráulico", "Bomba Hidráulica", "Célula de Carga", "Defletômetros", "Vigas de referência", "Chumbadores"];
+  }
+  // 4. Ensaio de Placa
+  else if (serviceId === 4) {
+    names = ["Placa de aço", "Conjunto de extensômetros", "Bomba e mangueiras", "Relógios comparadores"];
+  }
+  // 5. Carregamento de caminhão
+  else if (serviceId === 5) {
+    names = ["Cintas e catracas", "Pranchas de madeira", "Cones de sinalização", "EPIs da equipe"];
+  }
+  // Caso adicione mais serviços no futuro
+  else {
+    names = Array.from({length: 5}, (_, i) => `Item extra ${i + 1}`);
+  }
+
+  return names.map((name, i) => ({
+    id: serviceId * 1000 + (i + 1),
+    name: name,
+    status: null,
+    obs: '',
+    qty: 1
   }));
 }
 
