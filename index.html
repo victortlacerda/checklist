@@ -438,7 +438,7 @@ function renderHome(){
             ${c.ok   ? `<span class="sc-stat st-ok">${c.ok} Conf.</span>`:''}
             ${c.na   ? `<span class="sc-stat st-na">${c.na} N/A</span>`:''}
             ${c.nok  ? `<span class="sc-stat st-nok">${c.nok} N.Conf.</span>`:''}
-            ${c.pend ? `<span class="sc-stat st-pend">${c.pend} N.Preen.</span>`:''}
+            ${c.pend ? `<span class="sc-stat st-pend">${c.pend} Não Preenchido</span>`:''}
           </div>
         </div>
         <span class="sc-arrow">›</span>
@@ -591,7 +591,7 @@ function updateProgress(){
     <div class="chip"><div class="chip-dot cdok"></div>${c.ok} Conf.</div>
     <div class="chip"><div class="chip-dot cdna"></div>${c.na} N/A</div>
     <div class="chip"><div class="chip-dot cdnok"></div>${c.nok} N.Conf.</div>
-    <div class="chip"><div class="chip-dot cdpend"></div>${c.pend} N.Preen.</div>`;
+    <div class="chip"><div class="chip-dot cdpend"></div>${c.pend} Não Preenchido</div>`;
   document.getElementById('count-pill').textContent=`${svc.items.length} item${svc.items.length!==1?'s':''}`;
 }
 
