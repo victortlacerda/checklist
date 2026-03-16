@@ -1,6 +1,6 @@
 {
   "name": "Mobilização Sammour",
-  "short_name": "Sammour Mob",
+  "short_name": "Checklist de mobilização",
   "description": "Checklist de Mobilização para Ensaios Geotécnicos",
   "start_url": "./index.html",
   "display": "standalone",
