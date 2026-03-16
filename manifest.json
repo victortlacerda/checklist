@@ -1,7 +1,7 @@
 {
-  "name": "Mobilização Sammour",
-  "short_name": "Checklist de mobilização",
-  "description": "Checklist de Mobilização para Ensaios Geotécnicos",
+  "name": "Mobilização Sammour Engenharia",
+  "short_name": "Mobilização",
+  "description": "Checklist de Mobilização para Ensaios",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0c2340",
