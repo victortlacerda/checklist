@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#0c2340"/>
+<title>CheckList Mobilização</title>
+<link rel="manifest" href="manifest.json"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{
+  --ink:     #0c2340;
+  --deep:    #14375e;
+  --royal:   #1d5a9e;
+  --azure:   #2d7dd2;
+  --ice:     #7ab8f5;
+  --mist:    #dbeafe;
+  --frost:   #f0f7ff;
+  --white:   #ffffff;
+  --ok:      #059669;
+  --ok-mist: #d1fae5;
+  --na:      #0369a1;
+  --na-mist: #e0f2fe;
+  --nok:     #dc2626;
+  --nok-mist:#fee2e2;
+  --pend:    #94a3b8;
+  --pend-bg: #f1f5f9;
+  --text:    #0f172a;
+  --sub:     #475569;
+  --line:    #e2e8f0;
+  --r:       12px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--text);min-height:100vh;}
+
+/* ── SCREENS ── */
+.screen{display:none;min-height:100vh;}
+.screen.active{display:block;}
+
+/* ══════════════════════════════════════
+   HOME SCREEN
+══════════════════════════════════════ */
+#screen-home{padding-bottom:40px;}
+
+.home-header{
+  background:linear-gradient(160deg,var(--ink) 0%,var(--deep) 55%,var(--royal) 100%);
+  padding:32px 20px 28px;
+  text-align:center;
+}
+.home-header .logo{font-size:2.2rem;margin-bottom:10px;}
+.home-header h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.8rem;font-weight:800;color:#fff;
+  letter-spacing:.5px;line-height:1.1;
+}
+.home-header p{font-size:.85rem;color:var(--ice);margin-top:6px;}
+
+.home-main{max-width:520px;margin:0 auto;padding:28px 16px 0;}
+
+.home-section-title{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:.85rem;font-weight:700;letter-spacing:1px;
+  text-transform:uppercase;color:var(--sub);
+  margin-bottom:12px;
+}
+
+/* Service cards */
+.service-card{
+  background:var(--white);
+  border:1.5px solid var(--line);
+  border-radius:var(--r);
+  box-shadow:0 2px 10px rgba(12,35,64,.07);
+  margin-bottom:10px;
+  cursor:pointer;
+  transition:all .18s;
+  overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+.service-card:hover{
+  box-shadow:0 6px 22px rgba(12,35,64,.14);
+  border-color:var(--azure);
+  transform:translateY(-1px);
+}
+.service-card:active{transform:translateY(0);}
+
+.sc-inner{display:flex;align-items:center;gap:14px;padding:16px 18px;}
+.sc-num{
+  width:36px;height:36px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--royal),var(--azure));
+  border-radius:10px;display:flex;align-items:center;justify-content:center;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1rem;font-weight:800;color:#fff;
+}
+.sc-info{flex:1;min-width:0;}
+.sc-name{
+  font-size:.95rem;font-weight:600;color:var(--ink);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.sc-name-input{
+  font-family:'IBM Plex Sans',sans-serif;
+  font-size:.95rem;font-weight:600;color:var(--ink);
+  background:transparent;border:none;outline:none;
+  width:100%;cursor:text;
+}
+.sc-name-input:focus{
+  background:var(--mist);border-radius:5px;padding:1px 6px;
+}
+.sc-stats{
+  display:flex;gap:6px;margin-top:4px;flex-wrap:wrap;
+}
+.sc-stat{
+  font-size:.68rem;font-weight:600;
+  padding:2px 7px;border-radius:20px;
+}
+.sc-stat.st-ok {background:var(--ok-mist); color:var(--ok);}
+.sc-stat.st-na {background:var(--na-mist); color:var(--na);}
+.sc-stat.st-nok{background:var(--nok-mist);color:var(--nok);}
+.sc-stat.st-pend{background:var(--pend-bg);color:var(--pend);}
+.sc-arrow{color:var(--ice);font-size:1rem;flex-shrink:0;}
+
+/* Progress mini bar */
+.sc-bar{height:3px;background:var(--line);}
+.sc-bar-fill{height:3px;display:flex;}
+.sc-bar-ok {background:var(--ok);}
+.sc-bar-na {background:var(--azure);}
+.sc-bar-nok{background:var(--nok);}
+
+/* ══════════════════════════════════════
+   CHECKLIST SCREEN
+══════════════════════════════════════ */
+#screen-checklist{padding-bottom:88px;}
+
+/* HEADER */
+.cl-header{
+  background:linear-gradient(160deg,var(--ink) 0%,var(--deep) 55%,var(--royal) 100%);
+  padding:0 16px;
+  position:sticky;top:0;z-index:200;
+  box-shadow:0 3px 20px rgba(12,35,64,.4);
+}
+.cl-hinner{max-width:680px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:13px 0;}
+.btn-back{
+  width:36px;height:36px;flex-shrink:0;
+  background:rgba(255,255,255,.12);border-radius:9px;
+  border:none;color:#fff;font-size:1.1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s;
+}
+.btn-back:hover{background:rgba(255,255,255,.22);}
+.cl-htitles{flex:1;min-width:0;}
+.cl-htitles h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:1.15rem;font-weight:800;color:#fff;
+  letter-spacing:.4px;line-height:1.1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.cl-htitles p{font-size:.7rem;color:var(--ice);margin-top:1px;}
+
+/* PROGRESS STRIP */
+.progress-strip{background:var(--deep);padding:10px 16px;}
+.ps-inner{max-width:680px;margin:0 auto;display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.ps-bar-wrap{flex:1;min-width:100px;background:rgba(255,255,255,.12);border-radius:20px;height:6px;overflow:hidden;display:flex;}
+.ps-seg{height:100%;transition:width .4s ease;}
+.seg-ok{background:var(--ok);}.seg-na{background:var(--azure);}.seg-nok{background:var(--nok);}
+.ps-chips{display:flex;gap:6px;flex-wrap:wrap;}
+.chip{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.1);border-radius:20px;padding:3px 9px;font-size:.7rem;font-weight:600;color:#fff;}
+.chip-dot{width:7px;height:7px;border-radius:50%;}
+.cdok{background:var(--ok);}.cdna{background:var(--azure);}.cdnok{background:var(--nok);}.cdpend{background:var(--pend);}
+
+/* MAIN */
+.cl-main{max-width:680px;margin:0 auto;padding:18px 14px 10px;}
+
+/* META CARD */
+.meta-card{background:var(--white);border-radius:var(--r);box-shadow:0 2px 16px rgba(12,35,64,.10);padding:16px;margin-bottom:16px;border:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.field-wrap label{display:block;font-size:.68rem;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.field-wrap input{width:100%;padding:9px 11px;border:1.5px solid var(--line);border-radius:8px;font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;color:var(--text);background:var(--frost);outline:none;transition:border-color .18s;}
+.field-wrap input:focus{border-color:var(--azure);box-shadow:0 0 0 3px rgba(45,125,210,.12);background:#fff;}
+
+/* LIST HEAD */
+.list-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.list-head h2{font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;color:var(--ink);letter-spacing:.3px;text-transform:uppercase;}
+.count-pill{background:var(--royal);color:#fff;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:20px;}
+
+/* ITEM */
+.item{background:var(--white);border-radius:var(--r);box-shadow:0 1px 8px rgba(12,35,64,.07);margin-bottom:8px;border:1.5px solid var(--line);overflow:hidden;transition:box-shadow .2s,border-color .2s;}
+.item.expanded{box-shadow:0 4px 20px rgba(12,35,64,.14);border-color:var(--azure);}
+.item.st-ok {border-left:4px solid var(--ok);}
+.item.st-na {border-left:4px solid var(--azure);}
+.item.st-nok{border-left:4px solid var(--nok);}
+.item.st-pend{border-left:4px solid var(--line);}
+
+.item-row{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;}
+.item-row:active{background:var(--frost);}
+.item-num{width:26px;height:26px;flex-shrink:0;background:var(--frost);border:1px solid var(--line);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--sub);}
+.item-name-wrap{flex:1;min-width:0;}
+.item-name-input{font-family:'IBM Plex Sans',sans-serif;font-size:.92rem;font-weight:600;color:var(--ink);background:transparent;border:none;outline:none;width:100%;cursor:text;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.item-name-input:focus{background:var(--mist);border-radius:5px;padding:1px 5px;white-space:normal;overflow:visible;}
+.item-status-badge{flex-shrink:0;font-size:.67rem;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+.badge-ok  {background:var(--ok-mist); color:var(--ok);}
+.badge-na  {background:var(--na-mist); color:var(--na);}
+.badge-nok {background:var(--nok-mist);color:var(--nok);}
+.badge-pend{background:var(--pend-bg); color:var(--pend);}
+.item-chevron{flex-shrink:0;font-size:.75rem;color:var(--pend);transition:transform .25s;margin-left:2px;}
+.item.expanded .item-chevron{transform:rotate(180deg);}
+
+/* EXPAND PANEL */
+.item-panel{display:none;padding:0 14px 14px;animation:panelIn .2s ease;}
+@keyframes panelIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+.item.expanded .item-panel{display:block;}
+
+/* STATUS BUTTONS */
+.status-btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:10px;}
+.sbtn{padding:10px 6px;border-radius:9px;border:1.5px solid var(--line);background:var(--frost);font-family:'IBM Plex Sans',sans-serif;font-size:.75rem;font-weight:600;color:var(--sub);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:all .16s;-webkit-tap-highlight-color:transparent;}
+.sbtn:hover{transform:translateY(-1px);}
+.sbtn .sicon{font-size:1.2rem;line-height:1;}
+.sbtn.sel-ok {background:var(--ok); color:#fff;border-color:var(--ok); box-shadow:0 2px 8px rgba(5,150,105,.3);}
+.sbtn.sel-na {background:var(--azure);color:#fff;border-color:var(--azure);box-shadow:0 2px 8px rgba(45,125,210,.3);}
+.sbtn.sel-nok{background:var(--nok);color:#fff;border-color:var(--nok);box-shadow:0 2px 8px rgba(220,38,38,.3);}
+.sbtn.sel-ok:hover,.sbtn.sel-na:hover,.sbtn.sel-nok:hover{transform:none;}
+
+/* QTY */
+.qty-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.qty-label{font-size:.68rem;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;}
+.qty-ctrl{display:flex;align-items:center;}
+.qty-btn{width:30px;height:30px;border:1.5px solid var(--line);background:var(--frost);font-size:1rem;font-weight:700;color:var(--royal);cursor:pointer;transition:background .15s;line-height:1;display:flex;align-items:center;justify-content:center;}
+.qty-btn:first-child{border-radius:8px 0 0 8px;}
+.qty-btn:last-child {border-radius:0 8px 8px 0;}
+.qty-btn:hover{background:var(--mist);}
+.qty-val{width:40px;height:30px;border:1.5px solid var(--line);border-left:none;border-right:none;text-align:center;font-family:'IBM Plex Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--ink);background:#fff;outline:none;}
+.qty-val:focus{background:var(--mist);}
+
+/* OBS */
+.obs-box{display:none;animation:panelIn .18s ease;}
+.obs-box.show{display:block;}
+.obs-label{font-size:.68rem;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;display:flex;align-items:center;gap:4px;}
+.obs-box textarea{width:100%;padding:9px 11px;border:1.5px solid var(--line);border-radius:9px;font-family:'IBM Plex Sans',sans-serif;font-size:.84rem;color:var(--text);background:var(--frost);outline:none;resize:vertical;min-height:68px;transition:border-color .18s;}
+.obs-box.nok-box textarea{border-color:#fca5a5;}
+.obs-box.nok-box textarea:focus{border-color:var(--nok);box-shadow:0 0 0 3px rgba(220,38,38,.1);background:#fff;}
+.obs-box.na-box  textarea{border-color:#93c5fd;}
+.obs-box.na-box  textarea:focus{border-color:var(--na); box-shadow:0 0 0 3px rgba(3,105,161,.1); background:#fff;}
+
+/* ITEM ACTIONS */
+.item-actions{display:flex;align-items:center;justify-content:flex-end;padding-top:10px;border-top:1px solid var(--line);margin-top:4px;}
+.btn-clear-item{background:transparent;border:1.5px solid var(--line);font-size:.78rem;color:var(--sub);cursor:pointer;padding:5px 11px;border-radius:7px;font-family:'IBM Plex Sans',sans-serif;font-weight:500;display:flex;align-items:center;gap:4px;transition:all .15s;}
+.btn-clear-item:hover{background:var(--pend-bg);border-color:var(--pend);color:var(--ink);}
+
+/* ADD ROW */
+.btn-add-row{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:13px;background:transparent;border:1.5px dashed var(--ice);border-radius:var(--r);margin-top:4px;margin-bottom:18px;font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;font-weight:600;color:var(--azure);cursor:pointer;transition:all .18s;}
+.btn-add-row:hover{background:var(--mist);border-color:var(--azure);}
+
+/* FOOTER */
+.footer-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:12px 16px;display:flex;justify-content:center;gap:10px;z-index:190;}
+.btn-pdf{background:linear-gradient(135deg,var(--ink),var(--royal));color:#fff;border:none;padding:13px 28px;border-radius:var(--r);font-family:'Barlow Condensed',sans-serif;font-size:1rem;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;gap:8px;cursor:pointer;box-shadow:0 3px 14px rgba(12,35,64,.35);transition:all .18s;}
+.btn-pdf:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(12,35,64,.4);}
+.btn-reset-all{background:var(--frost);border:1.5px solid var(--line);color:var(--sub);padding:13px 18px;border-radius:var(--r);font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:6px;}
+.btn-reset-all:hover{background:var(--nok-mist);border-color:var(--nok);color:var(--nok);}
+
+/* TOAST */
+.toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--ink);color:#fff;padding:9px 20px;border-radius:30px;font-size:.82rem;font-weight:500;opacity:0;pointer-events:none;transition:all .28s;z-index:300;white-space:nowrap;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+@media(max-width:480px){
+  .meta-card{grid-template-columns:1fr;}
+  .status-btns{gap:5px;}
+  .sbtn{font-size:.7rem;padding:9px 4px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ HOME SCREEN ══════════════ -->
+<div id="screen-home" class="screen active">
+  <div class="home-header">
+    <div class="logo">🔧</div>
+    <h1>MOBILIZAÇÃO</h1>
+    <p>Selecione o serviço para iniciar o checklist</p>
+  </div>
+  <div class="home-main">
+    <div class="home-section-title">Serviços</div>
+    <div id="service-list"></div>
+  </div>
+</div>
+
+<!-- ══════════════ CHECKLIST SCREEN ══════════════ -->
+<div id="screen-checklist" class="screen">
+  <header class="cl-header">
+    <div class="cl-hinner">
+      <button class="btn-back" onclick="goHome()">←</button>
+      <div class="cl-htitles">
+        <h1 id="cl-title">Serviço</h1>
+        <p>Checklist de Equipamentos</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="progress-strip">
+    <div class="ps-inner">
+      <div class="ps-chips" id="ps-chips"></div>
+      <div class="ps-bar-wrap">
+        <div class="ps-seg seg-ok"  id="seg-ok"  style="width:0%"></div>
+        <div class="ps-seg seg-na"  id="seg-na"  style="width:0%"></div>
+        <div class="ps-seg seg-nok" id="seg-nok" style="width:0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cl-main">
+    <div class="meta-card">
+      <div class="field-wrap">
+        <label>Local / Obra</label>
+        <input id="f-local" type="text" placeholder="Ex: Canteiro Norte"/>
+      </div>
+      <div class="field-wrap">
+        <label>Responsável</label>
+        <input id="f-resp" type="text" placeholder="Nome do responsável"/>
+      </div>
+      <div class="field-wrap">
+        <label>Data</label>
+        <input id="f-date" type="date"/>
+      </div>
+    </div>
+
+    <div class="list-head">
+      <h2>Equipamentos</h2>
+      <span class="count-pill" id="count-pill">0 itens</span>
+    </div>
+
+    <div id="items-list"></div>
+    <button class="btn-add-row" onclick="addItem()">＋ Adicionar equipamento</button>
+  </div>
+
+  <div class="footer-bar">
+    <button class="btn-reset-all" onclick="resetAll()">↺ Limpar tudo</button>
+    <button class="btn-pdf" onclick="generatePDF()">📄 Gerar PDF</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+// DATA MODEL
+// ══════════════════════════════════════════════
+const NUM_SERVICES  = 5;
+const NUM_EQUIPMENT = 20;
+
+function defaultItems(serviceId){
+  return Array.from({length:NUM_EQUIPMENT},(_,i)=>({
+    id: serviceId * 1000 + (i + 1), 
+    name:`Equipamento ${i+1}`, 
+    status:null, 
+    obs:'', 
+    qty:1
+  }));
+}
+
+function loadState(){
+  try{
+    const s=localStorage.getItem('mob_state_v3');
+    if(s) {
+      const parsed = JSON.parse(s);
+      // Migração simples: se os IDs forem baixos (1-20), resetar para garantir unicidade
+      let needsReset = false;
+      parsed.services.forEach(svc => {
+        if (svc.items.some(item => item.id <= 100)) needsReset = true;
+      });
+      if (needsReset) {
+        localStorage.removeItem('mob_state_v3');
+        location.reload();
+      }
+      return parsed;
+    }
+  }catch(e){}
+  // Build fresh state
+  const services = Array.from({length:NUM_SERVICES},(_,i)=>({
+    id:i+1,
+    name:`Serviço ${i+1}`,
+    local:'', resp:'', date:'',
+    items: defaultItems(i+1)
+  }));
+  return {services};
+}
+
+let state = loadState();
+let currentServiceId = null;
+let nextItemId = 1000; // safe offset above default 20
+
+function save(){
+  localStorage.setItem('mob_state_v3', JSON.stringify(state));
+}
+
+function currentService(){
+  return state.services.find(s=>s.id===currentServiceId);
+}
+
+// ══════════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════════
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function today(){return new Date().toLocaleDateString('pt-BR');}
+function statusLabel(s){return s==='ok'?'Conforme':s==='na'?'Não Necessário':s==='nok'?'Não Conforme':'Não preenchido';}
+function badgeClass(s){return s==='ok'?'badge-ok':s==='na'?'badge-na':s==='nok'?'badge-nok':'badge-pend';}
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400);
+}
+function serviceStats(svc){
+  const c={ok:0,na:0,nok:0,pend:0};
+  svc.items.forEach(i=>{if(i.status)c[i.status]++;else c.pend++;});
+  return c;
+}
+
+// ══════════════════════════════════════════════
+// HOME SCREEN
+// ══════════════════════════════════════════════
+function renderHome(){
+  const list = document.getElementById('service-list');
+  list.innerHTML='';
+  state.services.forEach(svc=>{
+    const c = serviceStats(svc);
+    const total = svc.items.length || 1;
+    const pOk  = (c.ok /total*100).toFixed(1);
+    const pNa  = (c.na /total*100).toFixed(1);
+    const pNok = (c.nok/total*100).toFixed(1);
+
+    const card = document.createElement('div');
+    card.className='service-card';
+    card.dataset.id = svc.id;
+    card.innerHTML=`
+      <div class="sc-inner">
+        <div class="sc-num">${svc.id}</div>
+        <div class="sc-info">
+          <input class="sc-name-input" type="text" value="${esc(svc.name)}"
+            onclick="event.stopPropagation()"
+            oninput="onServiceName(${svc.id},this.value)"
+            placeholder="Nome do serviço"/>
+          <div class="sc-stats">
+            ${c.ok   ? `<span class="sc-stat st-ok">${c.ok} Conf.</span>`:''}
+            ${c.na   ? `<span class="sc-stat st-na">${c.na} N/A</span>`:''}
+            ${c.nok  ? `<span class="sc-stat st-nok">${c.nok} N.Conf.</span>`:''}
+            ${c.pend ? `<span class="sc-stat st-pend">${c.pend} N.Preen.</span>`:''}
+          </div>
+        </div>
+        <span class="sc-arrow">›</span>
+      </div>
+      <div class="sc-bar">
+        <div class="sc-bar-fill">
+          <div class="sc-bar-ok"  style="width:${pOk}%"></div>
+          <div class="sc-bar-na"  style="width:${pNa}%"></div>
+          <div class="sc-bar-nok" style="width:${pNok}%"></div>
+        </div>
+      </div>`;
+
+    // click on card (not on input) → open service
+    card.addEventListener('click', e => {
+      if(e.target.classList.contains('sc-name-input')) return;
+      openService(svc.id);
+    });
+
+    list.appendChild(card);
+  });
+}
+
+function onServiceName(id, val){
+  const svc = state.services.find(s=>s.id===id);
+  if(svc){ svc.name=val; save(); }
+}
+
+// ══════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function openService(id){
+  currentServiceId = id;
+  const svc = currentService();
+  document.getElementById('cl-title').textContent = svc.name;
+  // restore meta fields
+  document.getElementById('f-local').value = svc.local||'';
+  document.getElementById('f-resp').value  = svc.resp ||'';
+  document.getElementById('f-date').value  = svc.date ||new Date().toISOString().split('T')[0];
+  // save date default back
+  if(!svc.date) { svc.date=document.getElementById('f-date').value; save(); }
+  showScreen('screen-checklist');
+  renderChecklist();
+}
+
+function goHome(){
+  // persist meta before leaving
+  saveMeta();
+  currentServiceId=null;
+  showScreen('screen-home');
+  renderHome();
+}
+
+function saveMeta(){
+  if(!currentServiceId) return;
+  const svc=currentService();
+  if(!svc) return;
+  svc.local = document.getElementById('f-local').value;
+  svc.resp  = document.getElementById('f-resp').value;
+  svc.date  = document.getElementById('f-date').value;
+  save();
+}
+
+// auto-save meta on input change
+['f-local','f-resp','f-date'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', saveMeta);
+});
+
+// ══════════════════════════════════════════════
+// CHECKLIST RENDER
+// ══════════════════════════════════════════════
+function items(){ return currentService()?.items || []; }
+
+function renderChecklist(){
+  const svc = currentService();
+  if(!svc) return;
+  document.getElementById('cl-title').textContent = svc.name;
+
+  const list = document.getElementById('items-list');
+  const expanded = new Set();
+  list.querySelectorAll('.item.expanded').forEach(el=>expanded.add(+el.dataset.id));
+  list.innerHTML='';
+
+  svc.items.forEach((item,idx)=>{
+    const isExp = expanded.has(item.id);
+    const el = document.createElement('div');
+    el.className=`item st-${item.status||'pend'}${isExp?' expanded':''}`;
+    el.dataset.id = item.id;
+    el.innerHTML=`
+      <div class="item-row" onclick="toggleItem(this, event)">
+        <div class="item-num">${String(idx+1).padStart(2,'0')}</div>
+        <div class="item-name-wrap">
+          <input class="item-name-input" type="text" value="${esc(item.name)}"
+            onclick="event.stopPropagation()"
+            oninput="onName(${item.id},this.value)"
+            placeholder="Nome do equipamento"/>
+        </div>
+        <span class="item-status-badge ${badgeClass(item.status)}">${statusLabel(item.status)}</span>
+        <span class="item-chevron">▾</span>
+      </div>
+      <div class="item-panel">
+        <div class="status-btns">
+          <button class="sbtn${item.status==='ok'?' sel-ok':''}"  onclick="setStatus(${item.id},'ok')">
+            <span class="sicon">✅</span>Conforme
+          </button>
+          <button class="sbtn${item.status==='na'?' sel-na':''}"  onclick="setStatus(${item.id},'na')">
+            <span class="sicon">➖</span>Não Necessário
+          </button>
+          <button class="sbtn${item.status==='nok'?' sel-nok':''}" onclick="setStatus(${item.id},'nok')">
+            <span class="sicon">❌</span>Não Conforme
+          </button>
+        </div>
+        <div class="qty-row">
+          <span class="qty-label">📦 Quantidade:</span>
+          <div class="qty-ctrl">
+            <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
+            <input  class="qty-val" type="number" min="0" value="${item.qty??1}" oninput="onQty(${item.id},this.value)"/>
+            <button class="qty-btn" onclick="changeQty(${item.id},+1)">+</button>
+          </div>
+        </div>
+        <div class="obs-box na-box${item.status==='na'?' show':''}">
+          <div class="obs-label">💬 Justificativa</div>
+          <textarea placeholder="Descreva o motivo de não ser necessário…" oninput="onObs(${item.id},this.value)">${esc(item.obs)}</textarea>
+        </div>
+        <div class="obs-box nok-box${item.status==='nok'?' show':''}">
+          <div class="obs-label">⚠️ Descrição do defeito</div>
+          <textarea placeholder="Descreva o problema encontrado…" oninput="onObs(${item.id},this.value)">${esc(item.obs)}</textarea>
+        </div>
+        <div class="item-actions">
+          <button class="btn-clear-item" onclick="clearItem(${item.id})">↺ Limpar classificação</button>
+        </div>
+      </div>`;
+    list.appendChild(el);
+  });
+
+  updateProgress();
+}
+
+// ══════════════════════════════════════════════
+// PROGRESS
+// ══════════════════════════════════════════════
+function updateProgress(){
+  const svc = currentService(); if(!svc) return;
+  const c={ok:0,na:0,nok:0,pend:0};
+  svc.items.forEach(i=>{if(i.status)c[i.status]++;else c.pend++;});
+  const n=Math.max(svc.items.length,1);
+  document.getElementById('seg-ok').style.width =(c.ok /n*100)+'%';
+  document.getElementById('seg-na').style.width =(c.na /n*100)+'%';
+  document.getElementById('seg-nok').style.width=(c.nok/n*100)+'%';
+  document.getElementById('ps-chips').innerHTML=`
+    <div class="chip"><div class="chip-dot cdok"></div>${c.ok} Conf.</div>
+    <div class="chip"><div class="chip-dot cdna"></div>${c.na} N/A</div>
+    <div class="chip"><div class="chip-dot cdnok"></div>${c.nok} N.Conf.</div>
+    <div class="chip"><div class="chip-dot cdpend"></div>${c.pend} N.Preen.</div>`;
+  document.getElementById('count-pill').textContent=`${svc.items.length} item${svc.items.length!==1?'s':''}`;
+}
+
+// ══════════════════════════════════════════════
+// ITEM INTERACTIONS
+// ══════════════════════════════════════════════
+function toggleItem(rowEl, e) {
+  // Se clicar em botões, inputs ou textareas dentro do card, não alterna a expansão
+  if (e.target.closest('button') || e.target.closest('input') || e.target.closest('textarea')) {
+    return;
+  }
+
+  const itemEl = rowEl.closest('.item');
+  if (itemEl) {
+    itemEl.classList.toggle('expanded');
+  }
+}
+
+function setStatus(id, status){
+  const svc=currentService(); if(!svc) return;
+  const item=svc.items.find(i=>i.id===id); if(!item) return;
+  
+  // Alterna o status
+  item.status = item.status===status ? null : status;
+  if(!item.status||item.status==='ok') item.obs='';
+  save();
+
+  // Tenta encontrar o elemento na tela
+  const el=document.querySelector(`[data-id="${id}"]`);
+  if(!el){
+    renderChecklist();
+    return;
+  }
+
+  // Atualiza a classe do item para mudar a cor da borda lateral
+  el.className=`item st-${item.status||'pend'} expanded`;
+  
+  // Atualiza o badge de status
+  const badge = el.querySelector('.item-status-badge');
+  if (badge) {
+    badge.className=`item-status-badge ${badgeClass(item.status)}`;
+    badge.textContent=statusLabel(item.status);
+  }
+
+  // Atualiza os botões de seleção
+  const statusList=['ok','na','nok'];
+  el.querySelectorAll('.sbtn').forEach((b,i)=>{
+    b.className='sbtn';
+    if(item.status===statusList[i]) b.classList.add(`sel-${statusList[i]}`);
+  });
+
+  // Mostra/esconde caixas de observação
+  const naBox = el.querySelector('.na-box');
+  const nokBox = el.querySelector('.nok-box');
+  if (naBox) naBox.classList.toggle('show', item.status==='na');
+  if (nokBox) nokBox.classList.toggle('show', item.status==='nok');
+
+  if(!item.status||item.status==='ok'){
+    el.querySelectorAll('.obs-box textarea').forEach(t=>t.value='');
+  }
+  
+  if(item.status==='na'||item.status==='nok'){
+    const ta=el.querySelector('.obs-box.show textarea');
+    if(ta) setTimeout(()=>ta.focus(),60);
+  }
+  
+  updateProgress();
+}
+
+function onName(id,val){
+  const svc=currentService(); if(!svc) return;
+  const item=svc.items.find(i=>i.id===id);
+  if(item){item.name=val;save();}
+}
+function onObs(id,val){
+  const svc=currentService(); if(!svc) return;
+  const item=svc.items.find(i=>i.id===id);
+  if(item){item.obs=val;save();}
+}
+function onQty(id,val){
+  const svc=currentService(); if(!svc) return;
+  const item=svc.items.find(i=>i.id===id);
+  if(item){item.qty=Math.max(0,parseInt(val)||0);save();}
+}
+function changeQty(id,delta){
+  const svc=currentService(); if(!svc) return;
+  const item=svc.items.find(i=>i.id===id); if(!item) return;
+  item.qty=Math.max(0,(item.qty??1)+delta); save();
+  const el=document.querySelector(`[data-id="${id}"]`);
+  if(el){const inp=el.querySelector('.qty-val');if(inp)inp.value=item.qty;}
+}
+
+function clearItem(id){
+  const svc=currentService(); if(!svc) return;
+  const item=svc.items.find(i=>i.id===id); if(!item) return;
+  item.status=null; item.obs=''; item.qty=1; save();
+  const el=document.querySelector(`[data-id="${id}"]`);
+  if(!el){renderChecklist();return;}
+  el.className='item st-pend expanded';
+  el.querySelector('.item-status-badge').className='item-status-badge badge-pend';
+  el.querySelector('.item-status-badge').textContent='Não preenchido';
+  el.querySelectorAll('.sbtn').forEach(b=>b.className='sbtn');
+  el.querySelector('.na-box').classList.remove('show');
+  el.querySelector('.nok-box').classList.remove('show');
+  el.querySelectorAll('.obs-box textarea').forEach(t=>t.value='');
+  const qv=el.querySelector('.qty-val'); if(qv) qv.value=1;
+  updateProgress();
+  toast('Classificação limpa ✓');
+}
+
+function addItem(){
+  const svc=currentService(); if(!svc) return;
+  const id=nextItemId++;
+  svc.items.push({id,name:`Equipamento ${svc.items.length+1}`,status:null,obs:'',qty:1});
+  save(); renderChecklist();
+  setTimeout(()=>{
+    const el=document.querySelector(`[data-id="${id}"]`);
+    if(el){
+      el.classList.add('expanded');
+      el.scrollIntoView({behavior:'smooth',block:'center'});
+      el.querySelector('.item-name-input')?.select();
+    }
+  },60);
+}
+
+// ══════════════════════════════════════════════
+// RESET ALL (for current service)
+// ══════════════════════════════════════════════
+function resetAll(){
+  if(!confirm('Limpar todos os status, observações e quantidades deste serviço?')) return;
+  const svc=currentService(); if(!svc) return;
+  svc.items.forEach(i=>{i.status=null;i.obs='';i.qty=1;});
+  svc.local=''; svc.resp=''; svc.date=new Date().toISOString().split('T')[0];
+  document.getElementById('f-local').value='';
+  document.getElementById('f-resp').value='';
+  document.getElementById('f-date').value=svc.date;
+  save(); renderChecklist();
+  toast('Tudo limpo ✓');
+}
+
+// ══════════════════════════════════════════════
+// PDF
+// ══════════════════════════════════════════════
+function generatePDF(){
+  saveMeta();
+  const svc=currentService(); if(!svc) return;
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'mm',format:'a4'});
+  const W=210,H=297,mg=16;
+  const cInk=[12,35,64],cDeep=[20,55,94],cRoyal=[29,90,158],cAzure=[45,125,210];
+  const cIce=[219,234,254],cFrost=[240,247,255];
+  const cOk=[5,150,105],cNa=[3,105,161],cNok=[220,38,38],cMuted=[100,116,135];
+  const cLine=[226,232,240],cText=[15,23,42];
+
+  // header
+  doc.setFillColor(...cInk);doc.rect(0,0,W,42,'F');
+  doc.setFillColor(...cRoyal);doc.rect(0,38,W,6,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(20);doc.setTextColor(255,255,255);
+  doc.text('RELATÓRIO DE MOBILIZAÇÃO',mg,18);
+  doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(...cIce);
+  doc.text(svc.name,mg,28);
+
+  const fDateV=svc.date;
+  const fDateL=fDateV?new Date(fDateV+'T12:00').toLocaleDateString('pt-BR'):today();
+  doc.setFontSize(8);doc.setTextColor(...cIce);doc.text(fDateL,W-mg,18,{align:'right'});
+
+  let y=52;
+
+  // meta
+  doc.setFillColor(...cFrost);doc.roundedRect(mg,y,W-mg*2,22,3,3,'F');
+  doc.setDrawColor(...cLine);doc.roundedRect(mg,y,W-mg*2,22,3,3,'S');
+  const thirds=(W-mg*2)/3;
+  [[svc.local||'—','LOCAL'],[svc.resp||'—','RESPONSÁVEL'],[fDateL,'DATA']].forEach(([val,lbl],i)=>{
+    const x=mg+4+i*thirds;
+    doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(...cMuted);doc.text(lbl,x,y+7);
+    doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...cText);doc.text(String(val).substring(0,28),x,y+16);
+  });
+  y+=30;
+
+  // summary pills
+  const c={ok:0,na:0,nok:0,pend:0};
+  svc.items.forEach(i=>{if(i.status)c[i.status]++;else c.pend++;});
+  const total=svc.items.length;
+  const pw=(W-mg*2-9)/4;
+  [[c.ok,'Conforme',cOk],[c.na,'N/A',cAzure],[c.nok,'Não Conforme',cNok],[c.pend,'Pendente',cMuted]].forEach(([cnt,lbl,col],i)=>{
+    const px=mg+i*(pw+3);
+    doc.setFillColor(255,255,255);doc.setDrawColor(...cLine);doc.roundedRect(px,y,pw,18,3,3,'FD');
+    doc.setFillColor(...col);doc.roundedRect(px,y,4,18,2,0,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(13);doc.setTextColor(...col);doc.text(String(cnt),px+10,y+11);
+    doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(...cMuted);doc.text(lbl,px+10,y+16);
+  });
+  y+=26;
+
+  // progress bar
+  doc.setFillColor(...cLine);doc.roundedRect(mg,y,W-mg*2,5,2,2,'F');
+  let bx=mg;
+  [[c.ok,cOk],[c.na,cAzure],[c.nok,cNok]].forEach(([cnt,col])=>{
+    const bw=(cnt/total)*(W-mg*2);
+    if(bw>0){doc.setFillColor(...col);doc.rect(bx,y,bw,5,'F');}
+    bx+=bw;
+  });
+  y+=12;
+
+  // table
+  const colN=10,colQty=18,colName=68,colSt=36,colOb=W-mg*2-colN-colQty-colName-colSt;
+  const tHdr=8;
+  const drawTableHeader=()=>{
+    doc.setFillColor(...cInk);doc.roundedRect(mg,y,W-mg*2,tHdr,2,2,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(255,255,255);
+    doc.text('#',mg+3,y+5.5);
+    doc.text('QTD',mg+colN+3,y+5.5);
+    doc.text('EQUIPAMENTO',mg+colN+colQty+3,y+5.5);
+    doc.text('STATUS',mg+colN+colQty+colName+3,y+5.5);
+    doc.text('OBSERVAÇÕES',mg+colN+colQty+colName+colSt+3,y+5.5);
+    y+=tHdr;
+  };
+  drawTableHeader();
+
+  svc.items.forEach((item,idx)=>{
+    const obsLines=item.obs?doc.splitTextToSize(item.obs,colOb-4):[];
+    const rh=Math.max(9,obsLines.length*4.8+6);
+    if(y+rh>H-18){
+      doc.addPage();
+      doc.setFillColor(...cInk);doc.rect(0,0,W,10,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(255,255,255);
+      doc.text(`${svc.name} — continuação`,mg,7);
+      y=18;drawTableHeader();
+    }
+    doc.setFillColor(...(idx%2===0?cFrost:[255,255,255]));doc.rect(mg,y,W-mg*2,rh,'F');
+    doc.setDrawColor(...cLine);doc.rect(mg,y,W-mg*2,rh,'S');
+    doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(...cMuted);
+    doc.text(String(idx+1).padStart(2,'0'),mg+3,y+rh/2+2);
+    doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...cText);
+    doc.text(String(item.qty??1),mg+colN+colQty/2+1,y+rh/2+2,{align:'center'});
+    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(...cText);
+    const nLines=doc.splitTextToSize(item.name,colName-4);
+    doc.text(nLines,mg+colN+colQty+3,y+5.5+(nLines.length>1?0:1.5));
+    const sc=item.status==='ok'?cOk:item.status==='na'?cAzure:item.status==='nok'?cNok:cMuted;
+    const sl=statusLabel(item.status);
+    const sx=mg+colN+colQty+colName+2;
+    doc.setFillColor(...sc);doc.roundedRect(sx,y+rh/2-3.5,34,7,2,2,'F');
+    doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
+    doc.text(sl,sx+17,y+rh/2+1,{align:'center'});
+    if(obsLines.length&&item.obs){
+      doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(...cText);
+      doc.text(obsLines,mg+colN+colQty+colName+colSt+3,y+5.5);
+    }
+    y+=rh;
+  });
+
+  // footer all pages
+  const pages=doc.getNumberOfPages();
+  for(let p=1;p<=pages;p++){
+    doc.setPage(p);doc.setFillColor(...cInk);doc.rect(0,H-11,W,11,'F');
+    doc.setFont('helvetica','normal');doc.setFontSize(7);doc.setTextColor(...cIce);
+    doc.text(`Gerado em ${today()} — CheckList Mobilização`,mg,H-4);
+    doc.text(`Pág. ${p} / ${pages}`,W-mg,H-4,{align:'right'});
+  }
+  doc.save(`mobilizacao_${svc.name.replace(/\s+/g,'_')}_${fDateL.replace(/\//g,'')}.pdf`);
+  toast('📄 PDF gerado com sucesso!');
+}
+
+// ══════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════
+renderHome();
+</script>
+</body>
+</html>
