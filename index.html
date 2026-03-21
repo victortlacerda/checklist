@@ -367,7 +367,8 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
       <div class="meta-card des-meta">
         <div class="field-wrap"><label>Obra / Local</label><input id="df-local" type="text" placeholder="Obra / Cidade"/></div>
         <div class="field-wrap"><label>Responsável</label><input id="df-resp"  type="text" placeholder="Nome do responsável"/></div>
-        <div class="field-wrap"><label>Data</label><input id="df-date" type="date"/></div>
+        <div class="field-wrap"><label>Data da Mobilização</label><input id="df-date-mob" type="date"/></div>
+        <div class="field-wrap"><label>Data da Desmobilização</label><input id="df-date" type="date"/></div>
       </div>
       <div class="list-head">
         <h2>Equipamentos</h2>
@@ -390,6 +391,8 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 // ═══════════════════════════════════════════════════════════
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function today(){return new Date().toLocaleDateString('pt-BR');}
+function ptbrToISO(s){if(!s)return '';const p=s.split('/');if(p.length!==3)return '';return `${p[2]}-${p[1].padStart(2,'0')}-${p[0].padStart(2,'0')}`;}
+function isoToPtbr(s){if(!s)return '—';const p=s.split('-');if(p.length!==3)return s;return `${p[2]}/${p[1]}/${p[0]}`;}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
 
 // ── Mobilização combo logic ─────────────────────────────────
@@ -571,11 +574,12 @@ function saveMeta(){
   save();
 }
 ['f-local','f-resp','f-date'].forEach(id=>document.getElementById(id).addEventListener('input',saveMeta));
-['df-local','df-resp','df-date'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{
+['df-local','df-resp','df-date','df-date-mob'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{
   if(!desmobState)return;
-  desmobState.local=document.getElementById('df-local').value;
-  desmobState.resp =document.getElementById('df-resp').value;
-  desmobState.date =document.getElementById('df-date').value;
+  desmobState.local  =document.getElementById('df-local').value;
+  desmobState.resp   =document.getElementById('df-resp').value;
+  desmobState.date   =document.getElementById('df-date').value;
+  desmobState.dateMob=document.getElementById('df-date-mob').value;
   saveDesmob();
 }));
 
@@ -837,6 +841,9 @@ function renderDesmob(){
   document.getElementById('des-source-name').textContent=desmobState.sourceName||'—';
   document.getElementById('df-local').value=desmobState.local||'';
   document.getElementById('df-resp').value =desmobState.resp||'';
+  // sourceDate may be "dd/mm/yyyy" from export — convert to ISO for date input
+  const mobDateISO = desmobState.dateMob || ptbrToISO(desmobState.sourceDate) || '';
+  document.getElementById('df-date-mob').value=mobDateISO;
   document.getElementById('df-date').value =desmobState.date||new Date().toISOString().split('T')[0];
 
   const list=document.getElementById('des-items-list');
@@ -850,7 +857,7 @@ function renderDesmob(){
     el.className=`item des-item ${desComboClass(ditem)}${isExp?' expanded':''}`;
     el.dataset.id=ditem.id;
     const mobColor=ditem.mobStatus==='ok'?'badge-ok':ditem.mobStatus==='nok'?'badge-nok':'badge-na';
-    const mobLbl=ditem.mobStatus==='ok'?'Conf.':ditem.mobStatus==='nok'?'C/Defeito':'Não necessário';
+    const mobLbl=ditem.mobStatus==='ok'?'Conf.':ditem.mobStatus==='nok'?'C/Defeito':'N/A';
 
     el.innerHTML=`
       <div class="item-row" onclick="toggleDesmobItem(this,event)">
@@ -1073,7 +1080,7 @@ function generatePDF(){
     doc.text(ml,mg+cN+cQty+(cMob-3)/2+1,y+rh/2+1,{align:'center'});
     // classification badge
     const scc=item.status==='ok'?cOk:item.status==='na'?cAzure:item.status==='nok'?cNok:cMuted;
-    const scl=item.status==='ok'?'Conforme':item.status==='na'?'Não necessário':item.status==='nok'?'C/Defeito':'Pend.';
+    const scl=item.status==='ok'?'Conforme':item.status==='na'?'N/A':item.status==='nok'?'C/Defeito':'Pend.';
     doc.setFillColor(...scc);doc.roundedRect(mg+cN+cQty+cMob+1,y+rh/2-3,cCl-3,6,1,1,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
     doc.text(scl,mg+cN+cQty+cMob+(cCl-3)/2+1,y+rh/2+1,{align:'center'});
@@ -1117,19 +1124,14 @@ function generateDesmobPDF(){
 
   doc.setFillColor(...cFrost);doc.roundedRect(mg,y,W-mg*2,22,3,3,'F');
   doc.setDrawColor(253,230,138);doc.roundedRect(mg,y,W-mg*2,22,3,3,'S');
-  const t3=(W-mg*2)/3;
-  [[desmobState.local||'—','LOCAL'],[desmobState.resp||'—','RESPONSÁVEL'],[fDateL,'DATA']].forEach(([v,l],i)=>{
+  const t3=(W-mg*2)/4;
+  const mobDateLabel = desmobState.dateMob ? isoToPtbr(desmobState.dateMob) : (desmobState.sourceDate||'—');
+  [[desmobState.local||'—','LOCAL'],[desmobState.resp||'—','RESPONSÁVEL'],[mobDateLabel,'DATA MOBILIZAÇÃO'],[fDateL,'DATA DESMOBILIZAÇÃO']].forEach(([v,l],i)=>{
     const x=mg+4+i*t3;
     doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(...cMuted);doc.text(l,x,y+7);
-    doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...cText);doc.text(String(v).substring(0,28),x,y+16);
+    doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...cText);doc.text(String(v).substring(0,18),x,y+16);
   });
   y+=30;
-
-  doc.setFillColor(254,243,199);doc.roundedRect(mg,y,W-mg*2,10,3,3,'F');
-  doc.setDrawColor(253,230,138);doc.roundedRect(mg,y,W-mg*2,10,3,3,'S');
-  doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(...cAmb);
-  doc.text(`Origem: ${desmobState.sourceName||'—'}   |   Data mobilização: ${desmobState.sourceDate||'—'}`,mg+4,y+6.5);
-  y+=16;
 
   const dd={ok:0,nok:0,pend:0};
   const desN=desmobState.items.filter(i=>i.desmobilized===true).length;
