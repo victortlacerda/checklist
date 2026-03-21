@@ -975,10 +975,11 @@ function clearDesmobItem(id){
   updateDesmobProgress();toast('Limpo ✓');
 }
 function resetDesmob(){
-  if(!confirm('Limpar todos os status da desmobilização?'))return;
-  if(!desmobState)return;
-  desmobState.items.forEach(i=>{i.status=null;i.desmobilized=null;i.obs='';});
-  saveDesmob();renderDesmob();toast('Tudo limpo ✓');
+  if(!confirm('Limpar tudo e remover o checklist importado?'))return;
+  desmobState=null;
+  saveDesmob();
+  renderDesmob();
+  toast('Tudo limpo ✓');
 }
 
 // ═══════════════════════════════════════════════════════════
