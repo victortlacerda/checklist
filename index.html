@@ -179,20 +179,17 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 /* Section label inside panel */
 .panel-section{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--sub);margin-bottom:6px;margin-top:2px;}
 
-/* ── TOGGLE (mobilizado sim/não) ── */
-.toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 12px;background:var(--frost);border-radius:10px;border:1.5px solid var(--line);}
-.toggle-label{font-size:.83rem;font-weight:600;color:var(--ink);flex:1;}
-.toggle-switch{position:relative;width:46px;height:26px;flex-shrink:0;}
-.toggle-switch input{opacity:0;width:0;height:0;position:absolute;}
-.toggle-track{position:absolute;inset:0;border-radius:13px;background:var(--line);transition:background .2s;cursor:pointer;}
-.toggle-track:before{content:'';position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2);}
-.toggle-switch input:checked + .toggle-track{background:var(--ok);}
-.toggle-switch input:checked + .toggle-track:before{transform:translateX(20px);}
-.toggle-yes{font-size:.78rem;font-weight:700;color:var(--ok);min-width:24px;}
-.toggle-no {font-size:.78rem;font-weight:700;color:var(--pend);min-width:24px;text-align:right;}
-
-/* Same for desmob */
-.toggle-switch.des-toggle input:checked + .toggle-track{background:var(--amb);}
+/* ── SIM/NÃO BUTTONS ── */
+.yn-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.yn-label{font-size:.83rem;font-weight:600;color:var(--ink);flex:1;}
+.yn-btns{display:flex;gap:6px;}
+.yn-btn{padding:7px 18px;border-radius:8px;border:1.5px solid var(--line);background:var(--frost);font-family:'IBM Plex Sans',sans-serif;font-size:.8rem;font-weight:700;color:var(--sub);cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.yn-btn:hover{transform:translateY(-1px);}
+.yn-btn.sel-yes{background:var(--ok); color:#fff;border-color:var(--ok); box-shadow:0 2px 8px rgba(5,150,105,.3);}
+.yn-btn.sel-no {background:var(--pend);color:#fff;border-color:var(--pend);box-shadow:0 2px 6px rgba(148,163,184,.3);}
+.yn-btn.sel-yes:hover,.yn-btn.sel-no:hover{transform:none;}
+/* desmob variant */
+.yn-btn.des-yes.sel-yes{background:var(--amb);border-color:var(--amb);box-shadow:0 2px 8px rgba(180,83,9,.3);}
 
 /* ── STATUS BUTTONS ── */
 .status-btns{display:grid;gap:7px;margin-bottom:10px;}
@@ -597,7 +594,6 @@ function renderChecklist(){
     const el=document.createElement('div');
     el.className=`item ${mobComboClass(item)}${isExp?' expanded':''}`;
     el.dataset.id=item.id;
-    const isMob=item.mobilized===true;
     el.innerHTML=`
       <div class="item-row" onclick="toggleItem(this,event)">
         <div class="item-num">${String(idx+1).padStart(2,'0')}</div>
@@ -608,14 +604,12 @@ function renderChecklist(){
       <div class="item-panel">
 
         <div class="panel-section">1. Mobilização</div>
-        <div class="toggle-row">
-          <span class="toggle-label">Foi mobilizado?</span>
-          <span class="toggle-no">${!isMob&&item.mobilized!==null?'Não':''}</span>
-          <label class="toggle-switch">
-            <input type="checkbox" ${isMob?'checked':''} onchange="setMobilized(${item.id},this.checked)"/>
-            <span class="toggle-track"></span>
-          </label>
-          <span class="toggle-yes">${isMob?'Sim':''}</span>
+        <div class="yn-row">
+          <span class="yn-label">Foi mobilizado?</span>
+          <div class="yn-btns">
+            <button class="yn-btn${item.mobilized===true?' sel-yes':''}"  onclick="setMobilized(${item.id},true)">Sim</button>
+            <button class="yn-btn${item.mobilized===false?' sel-no':''}"  onclick="setMobilized(${item.id},false)">Não</button>
+          </div>
         </div>
 
         <div class="panel-section">2. Classificação</div>
@@ -692,10 +686,12 @@ function refreshItemUI(item){
   badge.className=`combo-badge ${mobComboBadgeClass(item)}`;
   badge.textContent=mobComboLabel(item);
   // toggle label text
-  const tyes=el.querySelector('.toggle-yes');
-  const tno =el.querySelector('.toggle-no');
-  if(tyes)tyes.textContent=item.mobilized===true?'Sim':'';
-  if(tno) tno.textContent =item.mobilized===false?'Não':'';
+  // yn buttons
+  const ynBtns=el.querySelectorAll('.yn-btn');
+  if(ynBtns.length===2){
+    ynBtns[0].className='yn-btn'+(item.mobilized===true?' sel-yes':'');
+    ynBtns[1].className='yn-btn'+(item.mobilized===false?' sel-no':'');
+  }
   // status buttons
   const statusList=['ok','na','nok'];
   el.querySelectorAll('.sbtn').forEach((b,i)=>{b.className='sbtn';if(item.status===statusList[i])b.classList.add(`sel-${statusList[i]}`);});
@@ -707,10 +703,11 @@ function refreshItemUI(item){
   updateProgress();
 }
 
-function setMobilized(id,checked){
+function setMobilized(id, val){
   const svc=currentService();if(!svc)return;
   const item=svc.items.find(i=>i.id===id);if(!item)return;
-  item.mobilized=checked;
+  // clicking the already-selected button deselects → null
+  item.mobilized = item.mobilized===val ? null : val;
   save();refreshItemUI(item);
 }
 
@@ -740,9 +737,8 @@ function clearItem(id){
   el.className=el.className.replace(/combo-\S+/g,'').trim()+' combo-pend expanded';
   const badge=el.querySelector('.combo-badge');
   badge.className='combo-badge cb-pend';badge.textContent='Não preenchido';
-  const chk=el.querySelector('input[type=checkbox]');if(chk)chk.checked=false;
-  const tyes=el.querySelector('.toggle-yes');const tno=el.querySelector('.toggle-no');
-  if(tyes)tyes.textContent='';if(tno)tno.textContent='';
+  const ynBtns=el.querySelectorAll('.yn-btn');
+  ynBtns.forEach(b=>{b.className=b.className.replace(/\bsel-yes\b|\bsel-no\b/g,'').trim();});
   el.querySelectorAll('.sbtn').forEach(b=>b.className='sbtn');
   const ob=el.querySelector('.obs-box');if(ob){ob.classList.remove('show');const ta=ob.querySelector('textarea');if(ta)ta.value='';}
   const qv=el.querySelector('.qty-val');if(qv)qv.value=1;
@@ -853,7 +849,6 @@ function renderDesmob(){
     const el=document.createElement('div');
     el.className=`item des-item ${desComboClass(ditem)}${isExp?' expanded':''}`;
     el.dataset.id=ditem.id;
-    const isDes=ditem.desmobilized===true;
     const mobColor=ditem.mobStatus==='ok'?'badge-ok':ditem.mobStatus==='nok'?'badge-nok':'badge-na';
     const mobLbl=ditem.mobStatus==='ok'?'Conf.':ditem.mobStatus==='nok'?'C/Defeito':'N/A';
 
@@ -872,14 +867,12 @@ function renderDesmob(){
         </div>
 
         <div class="panel-section">1. Desmobilização</div>
-        <div class="toggle-row">
-          <span class="toggle-label">Foi desmobilizado?</span>
-          <span class="toggle-no">${ditem.desmobilized===false?'Não':''}</span>
-          <label class="toggle-switch des-toggle">
-            <input type="checkbox" ${isDes?'checked':''} onchange="setDesmobilized(${ditem.id},this.checked)"/>
-            <span class="toggle-track"></span>
-          </label>
-          <span class="toggle-yes">${isDes?'Sim':''}</span>
+        <div class="yn-row">
+          <span class="yn-label">Foi desmobilizado?</span>
+          <div class="yn-btns">
+            <button class="yn-btn des-yes${ditem.desmobilized===true?' sel-yes':''}"  onclick="setDesmobilized(${ditem.id},true)">Sim</button>
+            <button class="yn-btn${ditem.desmobilized===false?' sel-no':''}"           onclick="setDesmobilized(${ditem.id},false)">Não</button>
+          </div>
         </div>
 
         <div class="panel-section">2. Classificação</div>
@@ -939,10 +932,11 @@ function refreshDesmobItemUI(ditem){
   const badge=el.querySelector('.combo-badge');
   badge.className=`combo-badge ${desComboBadgeClass(ditem)}`;
   badge.textContent=desComboLabel(ditem);
-  const tyes=el.querySelector('.toggle-yes');
-  const tno =el.querySelector('.toggle-no');
-  if(tyes)tyes.textContent=ditem.desmobilized===true?'Sim':'';
-  if(tno) tno.textContent =ditem.desmobilized===false?'Não':'';
+  const ynBtns=el.querySelectorAll('.yn-btn');
+  if(ynBtns.length===2){
+    ynBtns[0].className='yn-btn des-yes'+(ditem.desmobilized===true?' sel-yes':'');
+    ynBtns[1].className='yn-btn'+(ditem.desmobilized===false?' sel-no':'');
+  }
   el.querySelectorAll('.sbtn').forEach(b=>b.className='sbtn');
   if(ditem.status==='ok') el.querySelectorAll('.sbtn')[0].classList.add('sel-ok');
   if(ditem.status==='nok')el.querySelectorAll('.sbtn')[1].classList.add('sel-nok');
@@ -952,10 +946,11 @@ function refreshDesmobItemUI(ditem){
   updateDesmobProgress();
 }
 
-function setDesmobilized(id,checked){
+function setDesmobilized(id, val){
   if(!desmobState)return;
   const ditem=desmobState.items.find(i=>i.id===id);if(!ditem)return;
-  ditem.desmobilized=checked;saveDesmob();refreshDesmobItemUI(ditem);
+  ditem.desmobilized = ditem.desmobilized===val ? null : val;
+  saveDesmob();refreshDesmobItemUI(ditem);
 }
 function setDesmobStatus(id,status){
   if(!desmobState)return;
@@ -973,9 +968,8 @@ function clearDesmobItem(id){
   if(!el){renderDesmob();return;}
   el.className=el.className.replace(/dcombo-\S+/g,'').trim()+' dcombo-pend expanded';
   const badge=el.querySelector('.combo-badge');badge.className='combo-badge cb-dpend';badge.textContent='Não preenchido';
-  const chk=el.querySelector('input[type=checkbox]');if(chk)chk.checked=false;
-  const tyes=el.querySelector('.toggle-yes');const tno=el.querySelector('.toggle-no');
-  if(tyes)tyes.textContent='';if(tno)tno.textContent='';
+  const ynBtns=el.querySelectorAll('.yn-btn');
+  ynBtns.forEach(b=>{b.className=b.className.replace(/\bsel-yes\b|\bsel-no\b/g,'').trim();});
   el.querySelectorAll('.sbtn').forEach(b=>b.className='sbtn');
   const ob=el.querySelector('.obs-box');if(ob){ob.classList.remove('show');const ta=ob.querySelector('textarea');if(ta)ta.value='';}
   updateDesmobProgress();toast('Limpo ✓');
