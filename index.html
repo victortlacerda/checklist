@@ -850,7 +850,7 @@ function renderDesmob(){
     el.className=`item des-item ${desComboClass(ditem)}${isExp?' expanded':''}`;
     el.dataset.id=ditem.id;
     const mobColor=ditem.mobStatus==='ok'?'badge-ok':ditem.mobStatus==='nok'?'badge-nok':'badge-na';
-    const mobLbl=ditem.mobStatus==='ok'?'Conf.':ditem.mobStatus==='nok'?'C/Defeito':'N/A';
+    const mobLbl=ditem.mobStatus==='ok'?'Conf.':ditem.mobStatus==='nok'?'C/Defeito':'Não necessário';
 
     el.innerHTML=`
       <div class="item-row" onclick="toggleDesmobItem(this,event)">
@@ -1073,7 +1073,7 @@ function generatePDF(){
     doc.text(ml,mg+cN+cQty+(cMob-3)/2+1,y+rh/2+1,{align:'center'});
     // classification badge
     const scc=item.status==='ok'?cOk:item.status==='na'?cAzure:item.status==='nok'?cNok:cMuted;
-    const scl=item.status==='ok'?'Conforme':item.status==='na'?'N/A':item.status==='nok'?'C/Defeito':'Pend.';
+    const scl=item.status==='ok'?'Conforme':item.status==='na'?'Não necessário':item.status==='nok'?'C/Defeito':'Pend.';
     doc.setFillColor(...scc);doc.roundedRect(mg+cN+cQty+cMob+1,y+rh/2-3,cCl-3,6,1,1,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
     doc.text(scl,mg+cN+cQty+cMob+(cCl-3)/2+1,y+rh/2+1,{align:'center'});
