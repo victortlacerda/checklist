@@ -317,7 +317,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
   </div>
   <div class="footer-bar">
     <button class="btn-secondary danger"  onclick="resetAll()">↺ Limpar</button>
-    <button class="btn-secondary export"  onclick="exportJSON()">⬇ Exportar JSON</button>
+    <button class="btn-secondary export"  onclick="exportJSON()">⬇ Exportar Arquivo</button>
     <button class="btn-pdf"               onclick="generatePDF()">📄 PDF</button>
   </div>
 </div>
@@ -346,7 +346,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
     <div id="des-import-zone" class="import-zone" onclick="document.getElementById('file-input').click()">
       <div class="iz-icon">📂</div>
       <h3>Importar Checklist de Mobilização</h3>
-      <p>Importe o arquivo JSON exportado da tela de mobilização<br/>para iniciar o checklist de desmobilização.</p>
+      <p>Importe o arquivo exportado da tela de mobilização<br/>para iniciar o checklist de desmobilização.</p>
       <button class="btn-import-file" onclick="event.stopPropagation();document.getElementById('file-input').click()">📁 Selecionar arquivo .json</button>
     </div>
     <input type="file" id="file-input" accept=".json" onchange="importJSON(event)"/>
@@ -527,7 +527,7 @@ function renderHome(){
   dcard.className='desmob-card';
   let statsHtml='<span class="dsc-s pend">Nenhum checklist importado</span>';
   let barHtml='';
-  let subTxt='Importe um JSON de mobilização para começar';
+  let subTxt='Importe um arquivo de mobilização para começar';
   if(desmobState?.items?.length){
     const dd={ok:0,nok:0,pend:0};
     desmobState.items.forEach(i=>{if(i.status==='ok')dd.ok++;else if(i.status==='nok')dd.nok++;else dd.pend++;});
@@ -784,7 +784,7 @@ function exportJSON(){
   a.href=URL.createObjectURL(blob);
   a.download=`mobilizacao_${svc.name.replace(/\s+/g,'_')}_${fDateL.replace(/\//g,'')}.json`;
   a.click();URL.revokeObjectURL(a.href);
-  toast(`⬇ JSON exportado — ${mobilizedItems.length} itens mobilizados`);
+  toast(`⬇ Arquivo exportado — ${mobilizedItems.length} itens mobilizados`);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -845,7 +845,7 @@ function renderDesmob(){
     el.className=`item des-item ${desComboClass(ditem)}${isExp?' expanded':''}`;
     el.dataset.id=ditem.id;
     const mobColor=ditem.mobStatus==='ok'?'badge-ok':ditem.mobStatus==='nok'?'badge-nok':'badge-na';
-    const mobLbl=ditem.mobStatus==='ok'?'Conf.':ditem.mobStatus==='nok'?'C/Defeito':'N/A';
+    const mobLbl=ditem.mobStatus==='ok'?'Conf.':ditem.mobStatus==='nok'?'C/Defeito':'Não necessário';
 
     el.innerHTML=`
       <div class="item-row" onclick="toggleDesmobItem(this,event)">
@@ -1068,7 +1068,7 @@ function generatePDF(){
     doc.text(ml,mg+cN+cQty+(cMob-3)/2+1,y+rh/2+1,{align:'center'});
     // classification badge
     const scc=item.status==='ok'?cOk:item.status==='na'?cAzure:item.status==='nok'?cNok:cMuted;
-    const scl=item.status==='ok'?'Conforme':item.status==='na'?'N/A':item.status==='nok'?'C/Defeito':'Pend.';
+    const scl=item.status==='ok'?'Conforme':item.status==='na'?'Não necessário':item.status==='nok'?'C/Defeito':'Pend.';
     doc.setFillColor(...scc);doc.roundedRect(mg+cN+cQty+cMob+1,y+rh/2-3,cCl-3,6,1,1,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
     doc.text(scl,mg+cN+cQty+cMob+(cCl-3)/2+1,y+rh/2+1,{align:'center'});
