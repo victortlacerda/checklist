@@ -226,10 +226,6 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 .btn-clear-item{background:transparent;border:1.5px solid var(--line);font-size:.78rem;color:var(--sub);cursor:pointer;padding:5px 11px;border-radius:7px;font-family:'IBM Plex Sans',sans-serif;font-weight:500;display:flex;align-items:center;gap:4px;transition:all .15s;}
 .btn-clear-item:hover{background:var(--pend-bg);border-color:var(--pend);color:var(--ink);}
 
-/* ── ADD ROW ── */
-.btn-add-row{display:flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:13px;background:transparent;border:1.5px dashed var(--ice);border-radius:var(--r);margin-top:4px;margin-bottom:18px;font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;font-weight:600;color:var(--azure);cursor:pointer;transition:all .18s;}
-.btn-add-row:hover{background:var(--mist);border-color:var(--azure);}
-
 /* ── FOOTER ── */
 .footer-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:12px 16px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;z-index:190;}
 .btn-pdf{background:linear-gradient(135deg,var(--ink),var(--royal));color:#fff;border:none;padding:12px 22px;border-radius:var(--r);font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;gap:7px;cursor:pointer;box-shadow:0 3px 14px rgba(12,35,64,.35);transition:all .18s;}
@@ -318,7 +314,6 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
       <span class="count-pill" id="count-pill">0 itens</span>
     </div>
     <div id="items-list"></div>
-    <button class="btn-add-row" onclick="addItem()">＋ Adicionar equipamento</button>
   </div>
   <div class="footer-bar">
     <button class="btn-secondary danger"  onclick="resetAll()">↺ Limpar</button>
@@ -477,7 +472,7 @@ function loadState(){
 
 let state=loadState();
 let currentServiceId=null;
-let nextItemId=10000;
+
 function save(){localStorage.setItem('mob_state_v4',JSON.stringify(state));}
 function currentService(){return state.services.find(s=>s.id===currentServiceId);}
 
@@ -748,17 +743,10 @@ function clearItem(id){
   const qv=el.querySelector('.qty-val');if(qv)qv.value=1;
   updateProgress();toast('Limpo ✓');
 }
-function addItem(){
-  const svc=currentService();if(!svc)return;
-  const id=nextItemId++;
-  svc.items.push({id,name:`Equipamento ${svc.items.length+1}`,status:null,mobilized:null,obs:'',qty:1});
-  save();renderChecklist();
-  setTimeout(()=>{const el=document.querySelector(`[data-id="${id}"]`);if(el){el.classList.add('expanded');el.scrollIntoView({behavior:'smooth',block:'center'});}},60);
-}
 function resetAll(){
   if(!confirm('Limpar tudo deste serviço?'))return;
   const svc=currentService();if(!svc)return;
-  svc.items.forEach(i=>{i.status=null;i.mobilized=null;i.obs='';i.qty=1;});
+  svc.items=defaultItems(svc.id);
   svc.local='';svc.resp='';svc.date=new Date().toISOString().split('T')[0];
   document.getElementById('f-local').value='';document.getElementById('f-resp').value='';document.getElementById('f-date').value=svc.date;
   save();renderChecklist();toast('Tudo limpo ✓');
