@@ -12,31 +12,12 @@
 <link rel="icon" type="image/png" href="logo.png">
 <style>
 :root{
-  --ink:      #0c2340;
-  --deep:     #14375e;
-  --royal:    #1d5a9e;
-  --azure:    #2d7dd2;
-  --ice:      #7ab8f5;
-  --mist:     #dbeafe;
-  --frost:    #f0f7ff;
-  --white:    #ffffff;
-  --ok:       #059669;
-  --ok-mist:  #d1fae5;
-  --na:       #0369a1;
-  --na-mist:  #e0f2fe;
-  --nok:      #dc2626;
-  --nok-mist: #fee2e2;
-  --pend:     #94a3b8;
-  --pend-bg:  #f1f5f9;
-  --amb:      #b45309;
-  --amb-mid:  #d97706;
-  --amb-lite: #f59e0b;
-  --amb-mist: #fef3c7;
-  --amb-frost:#fffbeb;
-  --text:     #0f172a;
-  --sub:      #475569;
-  --line:     #e2e8f0;
-  --r:        12px;
+  --ink:#0c2340;--deep:#14375e;--royal:#1d5a9e;--azure:#2d7dd2;--ice:#7ab8f5;
+  --mist:#dbeafe;--frost:#f0f7ff;--white:#ffffff;
+  --ok:#059669;--ok-mist:#d1fae5;--na:#0369a1;--na-mist:#e0f2fe;
+  --nok:#dc2626;--nok-mist:#fee2e2;--pend:#94a3b8;--pend-bg:#f1f5f9;
+  --amb:#b45309;--amb-mid:#d97706;--amb-lite:#f59e0b;--amb-mist:#fef3c7;--amb-frost:#fffbeb;
+  --text:#0f172a;--sub:#475569;--line:#e2e8f0;--r:12px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -44,7 +25,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 .screen{display:none;min-height:100vh;}
 .screen.active{display:block;}
 
-/* ══ HOME ══ */
+/* HOME */
 #screen-home{padding-bottom:40px;}
 .home-header{background:linear-gradient(160deg,var(--ink) 0%,var(--deep) 55%,var(--royal) 100%);padding:32px 20px 28px;text-align:center;}
 .home-header .logo{margin-bottom:10px;}
@@ -53,8 +34,6 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 .home-main{max-width:520px;margin:0 auto;padding:28px 16px 0;}
 .home-section-title{font-family:'Barlow Condensed',sans-serif;font-size:.85rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--sub);margin-bottom:12px;margin-top:22px;display:flex;align-items:center;gap:8px;}
 .home-section-title:first-child{margin-top:0;}
-
-/* Service card */
 .service-card{background:var(--white);border:1.5px solid var(--line);border-radius:var(--r);box-shadow:0 2px 10px rgba(12,35,64,.07);margin-bottom:10px;cursor:pointer;transition:all .18s;overflow:hidden;-webkit-tap-highlight-color:transparent;}
 .service-card:hover{box-shadow:0 6px 22px rgba(12,35,64,.14);border-color:var(--azure);transform:translateY(-1px);}
 .service-card:active{transform:translateY(0);}
@@ -64,16 +43,14 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 .sc-name-txt{font-family:'IBM Plex Sans',sans-serif;font-size:.95rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .sc-stats{display:flex;gap:5px;margin-top:4px;flex-wrap:wrap;}
 .sc-stat{font-size:.65rem;font-weight:600;padding:2px 7px;border-radius:20px;}
-.sc-stat.st-ok  {background:var(--ok-mist); color:var(--ok);}
-.sc-stat.st-na  {background:var(--na-mist); color:var(--na);}
-.sc-stat.st-nok {background:var(--nok-mist);color:var(--nok);}
-.sc-stat.st-pend{background:var(--pend-bg); color:var(--pend);}
+.sc-stat.st-ok{background:var(--ok-mist);color:var(--ok);}
+.sc-stat.st-na{background:var(--na-mist);color:var(--na);}
+.sc-stat.st-nok{background:var(--nok-mist);color:var(--nok);}
+.sc-stat.st-pend{background:var(--pend-bg);color:var(--pend);}
 .sc-arrow{color:var(--ice);font-size:1rem;flex-shrink:0;}
 .sc-bar{height:3px;background:var(--line);}
 .sc-bar-fill{height:3px;display:flex;}
 .sc-bar-ok{background:var(--ok);}.sc-bar-na{background:var(--azure);}.sc-bar-nok{background:var(--nok);}
-
-/* Desmob card */
 .desmob-card{background:var(--white);border:1.5px solid #fde68a;border-radius:var(--r);box-shadow:0 2px 10px rgba(180,83,9,.08);margin-bottom:10px;cursor:pointer;transition:all .18s;overflow:hidden;-webkit-tap-highlight-color:transparent;}
 .desmob-card:hover{box-shadow:0 6px 22px rgba(180,83,9,.15);border-color:var(--amb-lite);transform:translateY(-1px);}
 .dsc-inner{display:flex;align-items:center;gap:14px;padding:16px 18px;}
@@ -83,15 +60,15 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 .dsc-sub{font-size:.73rem;color:var(--sub);margin-top:2px;}
 .dsc-stats{display:flex;gap:5px;margin-top:4px;flex-wrap:wrap;}
 .dsc-s{font-size:.65rem;font-weight:600;padding:2px 7px;border-radius:20px;}
-.dsc-s.ok  {background:var(--ok-mist); color:var(--ok);}
-.dsc-s.nok {background:var(--nok-mist);color:var(--nok);}
-.dsc-s.pend{background:var(--pend-bg); color:var(--pend);}
+.dsc-s.ok{background:var(--ok-mist);color:var(--ok);}
+.dsc-s.nok{background:var(--nok-mist);color:var(--nok);}
+.dsc-s.pend{background:var(--pend-bg);color:var(--pend);}
 .dsc-arrow{color:var(--amb-lite);font-size:1rem;flex-shrink:0;}
 .dsc-bar{height:3px;background:#fef3c7;}
 .dsc-bar-fill{height:3px;display:flex;}
 .dsc-bar-ok{background:var(--ok);}.dsc-bar-nok{background:var(--nok);}
 
-/* ══ SHARED HEADER / STRIP ══ */
+/* SHARED HEADER */
 .cl-header{padding:0 16px;position:sticky;top:0;z-index:200;box-shadow:0 3px 20px rgba(12,35,64,.4);}
 .cl-header.mob-hdr{background:linear-gradient(160deg,var(--ink) 0%,var(--deep) 55%,var(--royal) 100%);}
 .cl-header.des-hdr{background:linear-gradient(160deg,#451a03 0%,#78350f 55%,var(--amb) 100%);}
@@ -113,7 +90,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 .chip-dot{width:7px;height:7px;border-radius:50%;}
 .cdok{background:var(--ok);}.cdna{background:var(--azure);}.cdnok{background:var(--nok);}.cdpend{background:var(--pend);}
 
-/* ══ MAIN / META ══ */
+/* MAIN / META */
 .cl-main{max-width:680px;margin:0 auto;padding:18px 14px 10px;}
 #screen-checklist{padding-bottom:88px;}
 #screen-desmob{padding-bottom:88px;}
@@ -128,11 +105,10 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 .count-pill{background:var(--royal);color:#fff;font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:20px;}
 .count-pill.des-pill{background:var(--amb);}
 
-/* ══ ITEM CARD ══ */
+/* ITEM CARD */
 .item{background:var(--white);border-radius:var(--r);box-shadow:0 1px 8px rgba(12,35,64,.07);margin-bottom:8px;border:1.5px solid var(--line);overflow:hidden;transition:box-shadow .2s,border-color .2s;}
 .item.expanded{box-shadow:0 4px 20px rgba(12,35,64,.14);border-color:var(--azure);}
 .item.des-item.expanded{border-color:var(--amb-lite);}
-/* border-left color driven by combined badge */
 .item.combo-ok-mob   {border-left:4px solid var(--ok);}
 .item.combo-ok-nomob {border-left:4px solid #6ee7b7;}
 .item.combo-na-mob   {border-left:4px solid var(--na);}
@@ -140,93 +116,95 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 .item.combo-nok-mob  {border-left:4px solid var(--nok);}
 .item.combo-nok-nomob{border-left:4px solid #fca5a5;}
 .item.combo-pend     {border-left:4px solid var(--line);}
-/* desmob */
 .item.dcombo-ok-des   {border-left:4px solid var(--ok);}
 .item.dcombo-ok-nodes {border-left:4px solid #6ee7b7;}
 .item.dcombo-nok-des  {border-left:4px solid var(--nok);}
 .item.dcombo-nok-nodes{border-left:4px solid #fca5a5;}
 .item.dcombo-pend     {border-left:4px solid var(--line);}
-
-.item-row{display:flex;align-items:center;gap:10px;padding:12px 14px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;}
+.item-row{display:flex;align-items:center;gap:8px;padding:12px 14px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;}
 .item-row:active{background:var(--frost);}
 .item-num{width:26px;height:26px;flex-shrink:0;background:var(--frost);border:1px solid var(--line);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:var(--sub);}
 .item-name-wrap{flex:1;min-width:0;}
 .item-name-div{font-family:'IBM Plex Sans',sans-serif;font-size:.92rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+/* ID tag shown in collapsed row */
+.item-id-tag{font-size:.62rem;font-weight:600;background:var(--mist);color:var(--royal);padding:2px 7px;border-radius:20px;flex-shrink:0;white-space:nowrap;max-width:90px;overflow:hidden;text-overflow:ellipsis;border:1px solid #bfdbfe;}
 .item-qty-tag{font-size:.65rem;font-weight:700;background:var(--mist);color:var(--royal);padding:2px 6px;border-radius:20px;flex-shrink:0;white-space:nowrap;}
 .combo-badge{flex-shrink:0;font-size:.62rem;font-weight:700;padding:3px 8px;border-radius:20px;white-space:nowrap;max-width:130px;text-align:center;line-height:1.3;}
 .cb-ok-mob   {background:var(--ok-mist); color:var(--ok);}
-.cb-ok-nomob {background:#d1fae5;        color:#065f46;}
+.cb-ok-nomob {background:#d1fae5;color:#065f46;}
 .cb-na-mob   {background:var(--na-mist); color:var(--na);}
-.cb-na-nomob {background:#e0f2fe;        color:#075985;}
+.cb-na-nomob {background:#e0f2fe;color:#075985;}
 .cb-nok-mob  {background:var(--nok-mist);color:var(--nok);}
-.cb-nok-nomob{background:#fee2e2;        color:#991b1b;}
+.cb-nok-nomob{background:#fee2e2;color:#991b1b;}
 .cb-pend     {background:var(--pend-bg); color:var(--pend);}
-/* desmob badges */
 .cb-dok-des   {background:var(--ok-mist); color:var(--ok);}
-.cb-dok-nodes {background:#d1fae5;        color:#065f46;}
+.cb-dok-nodes {background:#d1fae5;color:#065f46;}
 .cb-dnok-des  {background:var(--nok-mist);color:var(--nok);}
-.cb-dnok-nodes{background:#fee2e2;        color:#991b1b;}
+.cb-dnok-nodes{background:#fee2e2;color:#991b1b;}
 .cb-dpend     {background:var(--pend-bg); color:var(--pend);}
-
 .item-chevron{flex-shrink:0;font-size:.75rem;color:var(--pend);transition:transform .25s;margin-left:2px;}
 .item.expanded .item-chevron{transform:rotate(180deg);}
 
-/* ══ PANEL ══ */
+/* PANEL */
 .item-panel{display:none;padding:0 14px 14px;animation:panelIn .2s ease;}
 @keyframes panelIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
 .item.expanded .item-panel{display:block;}
-
-/* Section label inside panel */
 .panel-section{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--sub);margin-bottom:6px;margin-top:2px;}
 
-/* ── SIM/NÃO BUTTONS ── */
+/* IDENTIFICATION FIELD */
+.id-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 12px;background:var(--frost);border-radius:10px;border:1.5px solid var(--line);}
+.id-label{font-size:.8rem;font-weight:600;color:var(--ink);white-space:nowrap;}
+.id-input{flex:1;padding:7px 10px;border:1.5px solid var(--line);border-radius:8px;font-family:'IBM Plex Sans',sans-serif;font-size:.85rem;color:var(--text);background:#fff;outline:none;transition:border-color .18s;min-width:0;}
+.id-input:focus{border-color:var(--azure);box-shadow:0 0 0 3px rgba(45,125,210,.12);}
+.id-input::placeholder{color:var(--pend);font-size:.8rem;}
+
+/* YN BUTTONS */
 .yn-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
 .yn-label{font-size:.83rem;font-weight:600;color:var(--ink);flex:1;}
 .yn-btns{display:flex;gap:6px;}
 .yn-btn{padding:7px 18px;border-radius:8px;border:1.5px solid var(--line);background:var(--frost);font-family:'IBM Plex Sans',sans-serif;font-size:.8rem;font-weight:700;color:var(--sub);cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
 .yn-btn:hover{transform:translateY(-1px);}
-.yn-btn.sel-yes{background:var(--ok); color:#fff;border-color:var(--ok); box-shadow:0 2px 8px rgba(5,150,105,.3);}
-.yn-btn.sel-no {background:var(--pend);color:#fff;border-color:var(--pend);box-shadow:0 2px 6px rgba(148,163,184,.3);}
+.yn-btn.sel-yes{background:var(--ok);color:#fff;border-color:var(--ok);box-shadow:0 2px 8px rgba(5,150,105,.3);}
+.yn-btn.sel-no{background:var(--pend);color:#fff;border-color:var(--pend);box-shadow:0 2px 6px rgba(148,163,184,.3);}
 .yn-btn.sel-yes:hover,.yn-btn.sel-no:hover{transform:none;}
-/* desmob variant */
 .yn-btn.des-yes.sel-yes{background:var(--amb);border-color:var(--amb);box-shadow:0 2px 8px rgba(180,83,9,.3);}
 
-/* ── STATUS BUTTONS ── */
+/* STATUS BUTTONS */
 .status-btns{display:grid;gap:7px;margin-bottom:10px;}
 .status-btns.three{grid-template-columns:1fr 1fr 1fr;}
 .status-btns.two  {grid-template-columns:1fr 1fr;}
 .sbtn{padding:10px 6px;border-radius:9px;border:1.5px solid var(--line);background:var(--frost);font-family:'IBM Plex Sans',sans-serif;font-size:.75rem;font-weight:600;color:var(--sub);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;transition:all .16s;-webkit-tap-highlight-color:transparent;}
 .sbtn:hover{transform:translateY(-1px);}
 .sbtn .sicon{font-size:1.1rem;line-height:1;}
-.sbtn.sel-ok {background:var(--ok); color:#fff;border-color:var(--ok); box-shadow:0 2px 8px rgba(5,150,105,.3);}
+.sbtn.sel-ok {background:var(--ok);color:#fff;border-color:var(--ok);box-shadow:0 2px 8px rgba(5,150,105,.3);}
 .sbtn.sel-na {background:var(--na);color:#fff;border-color:var(--na);box-shadow:0 2px 8px rgba(3,105,161,.3);}
 .sbtn.sel-nok{background:var(--nok);color:#fff;border-color:var(--nok);box-shadow:0 2px 8px rgba(220,38,38,.3);}
 .sbtn.sel-ok:hover,.sbtn.sel-na:hover,.sbtn.sel-nok:hover{transform:none;}
 
-/* ── QTY ── */
+/* QTY */
 .qty-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
 .qty-label{font-size:.68rem;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;}
 .qty-ctrl{display:flex;align-items:center;}
 .qty-btn{width:30px;height:30px;border:1.5px solid var(--line);background:var(--frost);font-size:1rem;font-weight:700;color:var(--royal);cursor:pointer;transition:background .15s;line-height:1;display:flex;align-items:center;justify-content:center;}
 .qty-btn:first-child{border-radius:8px 0 0 8px;}
-.qty-btn:last-child {border-radius:0 8px 8px 0;}
+.qty-btn:last-child{border-radius:0 8px 8px 0;}
 .qty-btn:hover{background:var(--mist);}
 .qty-val{width:40px;height:30px;border:1.5px solid var(--line);border-left:none;border-right:none;text-align:center;font-family:'IBM Plex Sans',sans-serif;font-size:.9rem;font-weight:600;color:var(--ink);background:#fff;outline:none;}
 .qty-val:focus{background:var(--mist);}
 
-/* ── OBS ── */
+/* OBS */
 .obs-box{display:none;animation:panelIn .18s ease;margin-bottom:4px;}
 .obs-box.show{display:block;}
 .obs-label{font-size:.68rem;font-weight:600;color:var(--sub);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px;display:flex;align-items:center;gap:4px;}
 .obs-box textarea{width:100%;padding:9px 11px;border:1.5px solid #fca5a5;border-radius:9px;font-family:'IBM Plex Sans',sans-serif;font-size:.84rem;color:var(--text);background:var(--frost);outline:none;resize:vertical;min-height:68px;transition:border-color .18s;}
 .obs-box textarea:focus{border-color:var(--nok);box-shadow:0 0 0 3px rgba(220,38,38,.1);background:#fff;}
 
-/* ── ITEM ACTIONS ── */
+/* ITEM ACTIONS */
 .item-actions{display:flex;align-items:center;justify-content:flex-end;padding-top:10px;border-top:1px solid var(--line);margin-top:6px;}
 .btn-clear-item{background:transparent;border:1.5px solid var(--line);font-size:.78rem;color:var(--sub);cursor:pointer;padding:5px 11px;border-radius:7px;font-family:'IBM Plex Sans',sans-serif;font-weight:500;display:flex;align-items:center;gap:4px;transition:all .15s;}
 .btn-clear-item:hover{background:var(--pend-bg);border-color:var(--pend);color:var(--ink);}
 
-/* ── FOOTER ── */
+/* FOOTER */
 .footer-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:12px 16px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;z-index:190;}
 .btn-pdf{background:linear-gradient(135deg,var(--ink),var(--royal));color:#fff;border:none;padding:12px 22px;border-radius:var(--r);font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;gap:7px;cursor:pointer;box-shadow:0 3px 14px rgba(12,35,64,.35);transition:all .18s;}
 .btn-pdf:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(12,35,64,.4);}
@@ -237,7 +215,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 .btn-secondary.danger:hover{background:var(--nok-mist);border-color:var(--nok);color:var(--nok);}
 .btn-secondary.export:hover{background:var(--amb-mist);border-color:var(--amb-mid);color:var(--amb);}
 
-/* ── IMPORT ZONE ── */
+/* IMPORT ZONE */
 .import-zone{background:var(--white);border:2px dashed #fde68a;border-radius:var(--r);padding:32px 20px;text-align:center;margin-bottom:16px;cursor:pointer;transition:all .2s;}
 .import-zone:hover{background:var(--amb-frost);border-color:var(--amb-lite);}
 .import-zone .iz-icon{font-size:2.2rem;margin-bottom:8px;}
@@ -252,7 +230,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 .source-badge .sb-text strong{font-weight:700;display:block;font-size:.88rem;}
 .btn-reimport{margin-left:auto;background:transparent;border:1px solid #fde68a;border-radius:7px;padding:4px 9px;font-size:.72rem;font-weight:600;color:var(--amb);cursor:pointer;white-space:nowrap;}
 
-/* ── TOAST ── */
+/* TOAST */
 .toast{position:fixed;bottom:82px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--ink);color:#fff;padding:9px 20px;border-radius:30px;font-size:.82rem;font-weight:500;opacity:0;pointer-events:none;transition:all .28s;z-index:300;white-space:nowrap;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
@@ -267,7 +245,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 </head>
 <body>
 
-<!-- ══ HOME ══ -->
+<!-- HOME -->
 <div id="screen-home" class="screen active">
   <div class="home-header">
     <div class="logo"><img src="logo.png" alt="Logo" style="width:60px;height:auto;"></div>
@@ -282,7 +260,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
   </div>
 </div>
 
-<!-- ══ CHECKLIST (Mobilização) ══ -->
+<!-- CHECKLIST (Mobilização) -->
 <div id="screen-checklist" class="screen">
   <header class="cl-header mob-hdr">
     <div class="cl-hinner">
@@ -306,7 +284,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
   <div class="cl-main">
     <div class="meta-card">
       <div class="field-wrap"><label>Obra / Local</label><input id="f-local" type="text" placeholder="Obra / Cidade"/></div>
-      <div class="field-wrap"><label>Responsável</label><input id="f-resp"  type="text" placeholder="Nome do responsável"/></div>
+      <div class="field-wrap"><label>Responsável</label><input id="f-resp" type="text" placeholder="Nome do responsável"/></div>
       <div class="field-wrap"><label>Data</label><input id="f-date" type="date"/></div>
     </div>
     <div class="list-head">
@@ -316,13 +294,13 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
     <div id="items-list"></div>
   </div>
   <div class="footer-bar">
-    <button class="btn-secondary danger"  onclick="resetAll()">↺ Limpar</button>
-    <button class="btn-secondary export"  onclick="exportJSON()">⬇ Exportar Arquivo</button>
-    <button class="btn-pdf"               onclick="generatePDF()">📄 PDF</button>
+    <button class="btn-secondary danger" onclick="resetAll()">↺ Limpar</button>
+    <button class="btn-secondary export" onclick="exportJSON()">⬇ Exportar Arquivo</button>
+    <button class="btn-pdf"              onclick="generatePDF()">📄 PDF</button>
   </div>
 </div>
 
-<!-- ══ DESMOBILIZAÇÃO ══ -->
+<!-- DESMOBILIZAÇÃO -->
 <div id="screen-desmob" class="screen">
   <header class="cl-header des-hdr">
     <div class="cl-hinner">
@@ -361,7 +339,7 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
       </div>
       <div class="meta-card des-meta">
         <div class="field-wrap"><label>Obra / Local</label><input id="df-local" type="text" placeholder="Obra / Cidade"/></div>
-        <div class="field-wrap"><label>Responsável</label><input id="df-resp"  type="text" placeholder="Nome do responsável"/></div>
+        <div class="field-wrap"><label>Responsável</label><input id="df-resp" type="text" placeholder="Nome do responsável"/></div>
         <div class="field-wrap"><label>Data da Mobilização</label><input id="df-date-mob" type="date"/></div>
         <div class="field-wrap"><label>Data da Desmobilização</label><input id="df-date" type="date"/></div>
       </div>
@@ -381,70 +359,61 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 <div class="toast" id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════════════════════
+// ═══ HELPERS ════════════════════════════════════════════════
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function today(){return new Date().toLocaleDateString('pt-BR');}
 function ptbrToISO(s){if(!s)return '';const p=s.split('/');if(p.length!==3)return '';return `${p[2]}-${p[1].padStart(2,'0')}-${p[0].padStart(2,'0')}`;}
 function isoToPtbr(s){if(!s)return '—';const p=s.split('-');if(p.length!==3)return s;return `${p[2]}/${p[1]}/${p[0]}`;}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
 
-// ── Mobilização combo logic ─────────────────────────────────
-// item has: status ('ok'|'na'|'nok'|null), mobilized (true|false|null), obs ('')
+// ═══ COMBO LOGIC — MOBILIZAÇÃO ══════════════════════════════
 function mobComboClass(item){
-  if(!item.status) return 'combo-pend';
-  const s=item.status, m=item.mobilized;
-  if(m===true)  return `combo-${s}-mob`;
-  if(m===false) return `combo-${s}-nomob`;
+  if(!item.status)return 'combo-pend';
+  const m=item.mobilized;
+  if(m===true) return `combo-${item.status}-mob`;
+  if(m===false)return `combo-${item.status}-nomob`;
   return 'combo-pend';
 }
 function mobComboLabel(item){
   const sMap={ok:'Conforme',na:'Não Necessário',nok:'Com Defeito'};
   const s=sMap[item.status];
-  if(!s) return 'Não preenchido';
-  if(item.mobilized===null||item.mobilized===undefined) return s;
-  return s + (item.mobilized ? ' · Mobilizado' : ' · Não Mobilizado');
+  if(!s)return 'Não preenchido';
+  if(item.mobilized===null||item.mobilized===undefined)return s;
+  return s+(item.mobilized?' · Mobilizado':' · Não Mobilizado');
 }
 function mobComboBadgeClass(item){
-  if(!item.status||item.mobilized===null||item.mobilized===undefined) return 'cb-pend';
-  const s=item.status, m=item.mobilized;
-  return `cb-${s}-${m?'mob':'nomob'}`;
+  if(!item.status||item.mobilized===null||item.mobilized===undefined)return 'cb-pend';
+  return `cb-${item.status}-${item.mobilized?'mob':'nomob'}`;
 }
 
-// ── Desmobilização combo logic ──────────────────────────────
-// ditem has: status ('ok'|'nok'|null), desmobilized (true|false|null), obs ''
-function desComboBadgeClass(ditem){
-  if(!ditem.status||ditem.desmobilized===null||ditem.desmobilized===undefined) return 'cb-dpend';
-  const s=ditem.status==='ok'?'dok':'dnok', d=ditem.desmobilized;
-  return `cb-${s}-${d?'des':'nodes'}`;
+// ═══ COMBO LOGIC — DESMOBILIZAÇÃO ═══════════════════════════
+function desComboBadgeClass(d){
+  if(!d.status||d.desmobilized===null||d.desmobilized===undefined)return 'cb-dpend';
+  const s=d.status==='ok'?'dok':'dnok';
+  return `cb-${s}-${d.desmobilized?'des':'nodes'}`;
 }
-function desComboLabel(ditem){
+function desComboLabel(d){
   const sMap={ok:'Conforme',nok:'Não Conforme'};
-  const s=sMap[ditem.status];
-  if(!s) return 'Não preenchido';
-  if(ditem.desmobilized===null||ditem.desmobilized===undefined) return s;
-  return s + (ditem.desmobilized ? ' · Desmobilizado' : ' · Não Desmobilizado');
+  const s=sMap[d.status];
+  if(!s)return 'Não preenchido';
+  if(d.desmobilized===null||d.desmobilized===undefined)return s;
+  return s+(d.desmobilized?' · Desmobilizado':' · Não Desmobilizado');
 }
-function desComboClass(ditem){
-  if(!ditem.status) return 'dcombo-pend';
-  const s=ditem.status==='ok'?'ok':'nok', d=ditem.desmobilized;
-  if(d===true)  return `dcombo-${s}-des`;
-  if(d===false) return `dcombo-${s}-nodes`;
+function desComboClass(d){
+  if(!d.status)return 'dcombo-pend';
+  const s=d.status==='ok'?'ok':'nok';
+  if(d.desmobilized===true) return `dcombo-${s}-des`;
+  if(d.desmobilized===false)return `dcombo-${s}-nodes`;
   return 'dcombo-pend';
 }
 
-// ── Counts for progress ─────────────────────────────────────
 function mobCounts(items){
-  // counts by status only (for progress bar)
   const c={ok:0,na:0,nok:0,pend:0};
   items.forEach(i=>{if(i.status)c[i.status]++;else c.pend++;});
   return c;
 }
 
-// ═══════════════════════════════════════════════════════════
-// MOBILIZAÇÃO — STATE
-// ═══════════════════════════════════════════════════════════
+// ═══ MOBILIZAÇÃO — STATE ════════════════════════════════════
 function defaultItems(serviceId){
   let names=[];
   if(serviceId===1)      names=["Cabo de conexão","Martelo de impacto","Sensor (Acelerômetro)","Pasta de moldagem","Unidade de aquisição","testeaaa"];
@@ -453,16 +422,19 @@ function defaultItems(serviceId){
   else if(serviceId===4) names=["Placa de aço","Conjunto de extensômetros","Bomba e mangueiras","Relógios comparadores"];
   else if(serviceId===5) names=["Cintas e catracas","Pranchas de madeira","Cones de sinalização","EPIs da equipe"];
   else                   names=Array.from({length:5},(_,i)=>`Item extra ${i+1}`);
-  return names.map((name,i)=>({id:serviceId*1000+(i+1),name,status:null,mobilized:null,obs:'',qty:1}));
+  // unitId = campo de identificação da unidade (ex: "Unidade 2", "Serial 004")
+  return names.map((name,i)=>({id:serviceId*1000+(i+1),name,unitId:'',status:null,mobilized:null,obs:'',qty:1}));
 }
 
 function loadState(){
   try{
-    const s=localStorage.getItem('mob_state_v4');
+    const s=localStorage.getItem('mob_state_v5');
     if(s){
       const p=JSON.parse(s);
-      // ensure mobilized field exists
-      p.services.forEach(svc=>svc.items.forEach(it=>{if(it.mobilized===undefined)it.mobilized=null;}));
+      p.services.forEach(svc=>svc.items.forEach(it=>{
+        if(it.mobilized===undefined)it.mobilized=null;
+        if(it.unitId===undefined)it.unitId='';
+      }));
       return p;
     }
   }catch(e){}
@@ -472,23 +444,28 @@ function loadState(){
 
 let state=loadState();
 let currentServiceId=null;
-
-function save(){localStorage.setItem('mob_state_v4',JSON.stringify(state));}
+function save(){localStorage.setItem('mob_state_v5',JSON.stringify(state));}
 function currentService(){return state.services.find(s=>s.id===currentServiceId);}
 
-// ═══════════════════════════════════════════════════════════
-// DESMOBILIZAÇÃO — STATE
-// ═══════════════════════════════════════════════════════════
+// ═══ DESMOBILIZAÇÃO — STATE ══════════════════════════════════
 function loadDesmob(){
-  try{const s=localStorage.getItem('desmob_v2');if(s){const p=JSON.parse(s);p.items.forEach(i=>{if(i.desmobilized===undefined)i.desmobilized=null;});return p;}}catch(e){}
+  try{
+    const s=localStorage.getItem('desmob_v2');
+    if(s){
+      const p=JSON.parse(s);
+      p.items.forEach(i=>{
+        if(i.desmobilized===undefined)i.desmobilized=null;
+        if(i.unitId===undefined)i.unitId='';
+      });
+      return p;
+    }
+  }catch(e){}
   return null;
 }
 let desmobState=loadDesmob();
 function saveDesmob(){if(desmobState)localStorage.setItem('desmob_v2',JSON.stringify(desmobState));else localStorage.removeItem('desmob_v2');}
 
-// ═══════════════════════════════════════════════════════════
-// HOME
-// ═══════════════════════════════════════════════════════════
+// ═══ HOME ════════════════════════════════════════════════════
 function renderHome(){
   const list=document.getElementById('service-list');
   list.innerHTML='';
@@ -520,7 +497,6 @@ function renderHome(){
     list.appendChild(card);
   });
 
-  // desmob card
   const dc=document.getElementById('desmob-home-card');
   dc.innerHTML='';
   const dcard=document.createElement('div');
@@ -541,9 +517,7 @@ function renderHome(){
   dc.appendChild(dcard);
 }
 
-// ═══════════════════════════════════════════════════════════
-// NAVIGATION
-// ═══════════════════════════════════════════════════════════
+// ═══ NAVIGATION ═════════════════════════════════════════════
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
 
 function openService(id){
@@ -559,7 +533,6 @@ function openService(id){
 }
 function openDesmob(){showScreen('screen-desmob');renderDesmob();}
 function goHome(){saveMeta();currentServiceId=null;showScreen('screen-home');renderHome();}
-
 function saveMeta(){
   if(!currentServiceId)return;
   const svc=currentService();if(!svc)return;
@@ -578,9 +551,7 @@ function saveMeta(){
   saveDesmob();
 }));
 
-// ═══════════════════════════════════════════════════════════
-// MOBILIZAÇÃO — RENDER
-// ═══════════════════════════════════════════════════════════
+// ═══ MOBILIZAÇÃO — RENDER ════════════════════════════════════
 function renderChecklist(){
   const svc=currentService();if(!svc)return;
   document.getElementById('cl-title').textContent=svc.name;
@@ -593,14 +564,25 @@ function renderChecklist(){
     const el=document.createElement('div');
     el.className=`item ${mobComboClass(item)}${isExp?' expanded':''}`;
     el.dataset.id=item.id;
+    // show unitId tag in row if filled
+    const idTag=item.unitId?`<span class="item-id-tag" title="${esc(item.unitId)}">${esc(item.unitId)}</span>`:'';
     el.innerHTML=`
       <div class="item-row" onclick="toggleItem(this,event)">
         <div class="item-num">${String(idx+1).padStart(2,'0')}</div>
         <div class="item-name-wrap"><div class="item-name-div">${esc(item.name)}</div></div>
+        ${idTag}
         <span class="combo-badge ${mobComboBadgeClass(item)}">${mobComboLabel(item)}</span>
         <span class="item-chevron">▾</span>
       </div>
       <div class="item-panel">
+
+        <div class="panel-section">Identificação da unidade</div>
+        <div class="id-row">
+          <span class="id-label">🏷 ID / Unidade:</span>
+          <input class="id-input" type="text" value="${esc(item.unitId)}"
+            placeholder="Ex: Unidade 2, Serial 004, Gerador A…"
+            oninput="onUnitId(${item.id},this.value)"/>
+        </div>
 
         <div class="panel-section">1. Mobilização</div>
         <div class="yn-row">
@@ -654,7 +636,6 @@ function updateProgress(){
   document.getElementById('seg-ok').style.width =(c.ok /n*100)+'%';
   document.getElementById('seg-na').style.width =(c.na /n*100)+'%';
   document.getElementById('seg-nok').style.width=(c.nok/n*100)+'%';
-  // also count mobilized
   const mob=svc.items.filter(i=>i.mobilized===true).length;
   document.getElementById('ps-chips').innerHTML=`
     <div class="chip"><div class="chip-dot cdok"></div>${mob} Mob.</div>
@@ -665,9 +646,7 @@ function updateProgress(){
   document.getElementById('count-pill').textContent=`${svc.items.length} item${svc.items.length!==1?'s':''}`;
 }
 
-// ═══════════════════════════════════════════════════════════
-// MOBILIZAÇÃO — INTERACTIONS
-// ═══════════════════════════════════════════════════════════
+// ═══ MOBILIZAÇÃO — INTERACTIONS ══════════════════════════════
 function toggleItem(rowEl,e){
   if(e.target.closest('button')||e.target.closest('input')||e.target.closest('textarea'))return;
   rowEl.closest('.item')?.classList.toggle('expanded');
@@ -676,25 +655,33 @@ function toggleItem(rowEl,e){
 function refreshItemUI(item){
   const el=document.querySelector(`[data-id="${item.id}"]`);
   if(!el){renderChecklist();return;}
-  // update border class — remove all combo-* classes and add new
   el.className=el.className.replace(/combo-\S+/g,'').trim();
   el.classList.add(mobComboClass(item));
   if(el.classList.contains('expanded'))el.classList.add('expanded');
-  // badge
   const badge=el.querySelector('.combo-badge');
   badge.className=`combo-badge ${mobComboBadgeClass(item)}`;
   badge.textContent=mobComboLabel(item);
-  // toggle label text
-  // yn buttons
+  // update id tag in row
+  let idTag=el.querySelector('.item-id-tag');
+  if(item.unitId){
+    if(!idTag){
+      idTag=document.createElement('span');
+      idTag.className='item-id-tag';
+      const chevron=el.querySelector('.item-chevron');
+      el.querySelector('.item-row').insertBefore(idTag,badge);
+    }
+    idTag.textContent=item.unitId;
+    idTag.title=item.unitId;
+  } else {
+    if(idTag)idTag.remove();
+  }
   const ynBtns=el.querySelectorAll('.yn-btn');
   if(ynBtns.length===2){
     ynBtns[0].className='yn-btn'+(item.mobilized===true?' sel-yes':'');
     ynBtns[1].className='yn-btn'+(item.mobilized===false?' sel-no':'');
   }
-  // status buttons
   const statusList=['ok','na','nok'];
   el.querySelectorAll('.sbtn').forEach((b,i)=>{b.className='sbtn';if(item.status===statusList[i])b.classList.add(`sel-${statusList[i]}`);});
-  // obs box
   const ob=el.querySelector('.obs-box');
   if(ob)ob.classList.toggle('show',item.status==='nok');
   if(item.status!=='nok'&&ob){const ta=ob.querySelector('textarea');if(ta)ta.value='';}
@@ -702,14 +689,33 @@ function refreshItemUI(item){
   updateProgress();
 }
 
-function setMobilized(id, val){
+function onUnitId(id,val){
+  const svc=currentService();if(!svc)return;
+  const item=svc.items.find(i=>i.id===id);
+  if(!item)return;
+  item.unitId=val;save();
+  // update tag in row without full re-render
+  const el=document.querySelector(`[data-id="${id}"]`);
+  if(!el)return;
+  let idTag=el.querySelector('.item-id-tag');
+  if(val){
+    if(!idTag){
+      idTag=document.createElement('span');
+      idTag.className='item-id-tag';
+      const badge=el.querySelector('.combo-badge');
+      el.querySelector('.item-row').insertBefore(idTag,badge);
+    }
+    idTag.textContent=val;idTag.title=val;
+  } else {
+    if(idTag)idTag.remove();
+  }
+}
+function setMobilized(id,val){
   const svc=currentService();if(!svc)return;
   const item=svc.items.find(i=>i.id===id);if(!item)return;
-  // clicking the already-selected button deselects → null
-  item.mobilized = item.mobilized===val ? null : val;
+  item.mobilized=item.mobilized===val?null:val;
   save();refreshItemUI(item);
 }
-
 function setMobStatus(id,status){
   const svc=currentService();if(!svc)return;
   const item=svc.items.find(i=>i.id===id);if(!item)return;
@@ -717,7 +723,6 @@ function setMobStatus(id,status){
   if(item.status!=='nok')item.obs='';
   save();refreshItemUI(item);
 }
-
 function onObs(id,val){const svc=currentService();if(!svc)return;const item=svc.items.find(i=>i.id===id);if(item){item.obs=val;save();}}
 function onQty(id,val){const svc=currentService();if(!svc)return;const item=svc.items.find(i=>i.id===id);if(item){item.qty=Math.max(0,parseInt(val)||0);save();}}
 function changeQty(id,delta){
@@ -730,12 +735,14 @@ function changeQty(id,delta){
 function clearItem(id){
   const svc=currentService();if(!svc)return;
   const item=svc.items.find(i=>i.id===id);if(!item)return;
-  item.status=null;item.mobilized=null;item.obs='';item.qty=1;save();
+  item.status=null;item.mobilized=null;item.obs='';item.qty=1;item.unitId='';save();
   const el=document.querySelector(`[data-id="${id}"]`);
   if(!el){renderChecklist();return;}
   el.className=el.className.replace(/combo-\S+/g,'').trim()+' combo-pend expanded';
   const badge=el.querySelector('.combo-badge');
   badge.className='combo-badge cb-pend';badge.textContent='Não preenchido';
+  const idTag=el.querySelector('.item-id-tag');if(idTag)idTag.remove();
+  const idInp=el.querySelector('.id-input');if(idInp)idInp.value='';
   const ynBtns=el.querySelectorAll('.yn-btn');
   ynBtns.forEach(b=>{b.className=b.className.replace(/\bsel-yes\b|\bsel-no\b/g,'').trim();});
   el.querySelectorAll('.sbtn').forEach(b=>b.className='sbtn');
@@ -748,35 +755,26 @@ function resetAll(){
   const svc=currentService();if(!svc)return;
   svc.items=defaultItems(svc.id);
   svc.local='';svc.resp='';svc.date=new Date().toISOString().split('T')[0];
-  document.getElementById('f-local').value='';document.getElementById('f-resp').value='';document.getElementById('f-date').value=svc.date;
+  document.getElementById('f-local').value='';
+  document.getElementById('f-resp').value='';
+  document.getElementById('f-date').value=svc.date;
   save();renderChecklist();toast('Tudo limpo ✓');
 }
 
-// ═══════════════════════════════════════════════════════════
-// EXPORT JSON — apenas mobilizados
-// ═══════════════════════════════════════════════════════════
+// ═══ EXPORT JSON ═════════════════════════════════════════════
 function exportJSON(){
   saveMeta();
   const svc=currentService();if(!svc)return;
-  const fDateV=svc.date;
-  const fDateL=fDateV?new Date(fDateV+'T12:00').toLocaleDateString('pt-BR'):today();
-
-  // Export only items where mobilized===true
+  const fDateL=svc.date?new Date(svc.date+'T12:00').toLocaleDateString('pt-BR'):today();
   const mobilizedItems=svc.items.filter(i=>i.mobilized===true);
   if(!mobilizedItems.length){toast('⚠ Nenhum item marcado como Mobilizado.');return;}
-
   const payload={
     _info:'CheckList Mobilização — exportação para desmobilização',
-    serviceName: svc.name,
-    local: svc.local||'',
-    resp:  svc.resp||'',
-    date:  fDateL,
-    exportedAt: new Date().toISOString(),
-    items: mobilizedItems.map(i=>({
-      name:              i.name,
-      qty:               i.qty??1,
-      mobilizationStatus:i.status||'pend',  // ok/na/nok/pend at time of export
-      mobilized:         true
+    serviceName:svc.name,local:svc.local||'',resp:svc.resp||'',date:fDateL,
+    exportedAt:new Date().toISOString(),
+    items:mobilizedItems.map(i=>({
+      name:i.name,unitId:i.unitId||'',qty:i.qty??1,
+      mobilizationStatus:i.status||'pend',mobilized:true
     }))
   };
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
@@ -787,9 +785,7 @@ function exportJSON(){
   toast(`⬇ Arquivo exportado — ${mobilizedItems.length} itens mobilizados`);
 }
 
-// ═══════════════════════════════════════════════════════════
-// IMPORT JSON
-// ═══════════════════════════════════════════════════════════
+// ═══ IMPORT JSON ═════════════════════════════════════════════
 function importJSON(event){
   const file=event.target.files[0];if(!file)return;
   const reader=new FileReader();
@@ -798,15 +794,14 @@ function importJSON(event){
       const data=JSON.parse(e.target.result);
       if(!data.items||!Array.isArray(data.items))throw new Error();
       desmobState={
-        sourceName: data.serviceName||file.name,
-        sourceDate: data.date||'',
-        local: data.local||'', resp: data.resp||'',
-        date: new Date().toISOString().split('T')[0],
-        items: data.items.map((item,i)=>({
-          id:20000+i, name:item.name||`Item ${i+1}`,
-          qty:item.qty??1,
-          mobStatus:item.mobilizationStatus||'pend',
-          status:null, desmobilized:null, obs:''
+        sourceName:data.serviceName||file.name,sourceDate:data.date||'',
+        local:data.local||'',resp:data.resp||'',
+        date:new Date().toISOString().split('T')[0],
+        items:data.items.map((item,i)=>({
+          id:20000+i,name:item.name||`Item ${i+1}`,
+          unitId:item.unitId||'',
+          qty:item.qty??1,mobStatus:item.mobilizationStatus||'pend',
+          status:null,desmobilized:null,obs:''
         }))
       };
       saveDesmob();renderDesmob();
@@ -817,9 +812,7 @@ function importJSON(event){
   reader.readAsText(file);
 }
 
-// ═══════════════════════════════════════════════════════════
-// DESMOBILIZAÇÃO — RENDER
-// ═══════════════════════════════════════════════════════════
+// ═══ DESMOBILIZAÇÃO — RENDER ══════════════════════════════════
 function renderDesmob(){
   const hasData=desmobState?.items?.length>0;
   document.getElementById('des-import-zone').style.display=hasData?'none':'block';
@@ -828,11 +821,10 @@ function renderDesmob(){
   if(!hasData)return;
   document.getElementById('des-source-name').textContent=desmobState.sourceName||'—';
   document.getElementById('df-local').value=desmobState.local||'';
-  document.getElementById('df-resp').value =desmobState.resp||'';
-  // sourceDate may be "dd/mm/yyyy" from export — convert to ISO for date input
-  const mobDateISO = desmobState.dateMob || ptbrToISO(desmobState.sourceDate) || '';
+  document.getElementById('df-resp').value=desmobState.resp||'';
+  const mobDateISO=desmobState.dateMob||ptbrToISO(desmobState.sourceDate)||'';
   document.getElementById('df-date-mob').value=mobDateISO;
-  document.getElementById('df-date').value =desmobState.date||new Date().toISOString().split('T')[0];
+  document.getElementById('df-date').value=desmobState.date||new Date().toISOString().split('T')[0];
 
   const list=document.getElementById('des-items-list');
   const expanded=new Set();
@@ -846,11 +838,13 @@ function renderDesmob(){
     el.dataset.id=ditem.id;
     const mobColor=ditem.mobStatus==='ok'?'badge-ok':ditem.mobStatus==='nok'?'badge-nok':'badge-na';
     const mobLbl=ditem.mobStatus==='ok'?'Conf.':ditem.mobStatus==='nok'?'C/Defeito':'Não necessário';
+    const idTag=ditem.unitId?`<span class="item-id-tag" title="${esc(ditem.unitId)}">${esc(ditem.unitId)}</span>`:'';
 
     el.innerHTML=`
       <div class="item-row" onclick="toggleDesmobItem(this,event)">
         <div class="item-num">${String(idx+1).padStart(2,'0')}</div>
         <div class="item-name-wrap"><div class="item-name-div">${esc(ditem.name)}</div></div>
+        ${idTag}
         <span class="item-qty-tag">×${ditem.qty}</span>
         <span class="combo-badge ${desComboBadgeClass(ditem)}">${desComboLabel(ditem)}</span>
         <span class="item-chevron">▾</span>
@@ -859,14 +853,15 @@ function renderDesmob(){
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;font-size:.75rem;color:var(--sub);">
           <span>Mobilização:</span>
           <span style="font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:20px;" class="${mobColor}">${mobLbl}</span>
+          ${ditem.unitId?`<span style="font-size:.68rem;font-weight:600;color:var(--royal);">· ${esc(ditem.unitId)}</span>`:''}
         </div>
 
         <div class="panel-section">1. Desmobilização</div>
         <div class="yn-row">
           <span class="yn-label">Foi desmobilizado?</span>
           <div class="yn-btns">
-            <button class="yn-btn des-yes${ditem.desmobilized===true?' sel-yes':''}"  onclick="setDesmobilized(${ditem.id},true)">Sim</button>
-            <button class="yn-btn${ditem.desmobilized===false?' sel-no':''}"           onclick="setDesmobilized(${ditem.id},false)">Não</button>
+            <button class="yn-btn des-yes${ditem.desmobilized===true?' sel-yes':''}" onclick="setDesmobilized(${ditem.id},true)">Sim</button>
+            <button class="yn-btn${ditem.desmobilized===false?' sel-no':''}"          onclick="setDesmobilized(${ditem.id},false)">Não</button>
           </div>
         </div>
 
@@ -910,14 +905,11 @@ function updateDesmobProgress(){
   document.getElementById('des-count-pill').textContent=`${desmobState.items.length} item${desmobState.items.length!==1?'s':''}`;
 }
 
-// ═══════════════════════════════════════════════════════════
-// DESMOBILIZAÇÃO — INTERACTIONS
-// ═══════════════════════════════════════════════════════════
+// ═══ DESMOBILIZAÇÃO — INTERACTIONS ═══════════════════════════
 function toggleDesmobItem(rowEl,e){
   if(e.target.closest('button')||e.target.closest('input')||e.target.closest('textarea'))return;
   rowEl.closest('.item')?.classList.toggle('expanded');
 }
-
 function refreshDesmobItemUI(ditem){
   const el=document.querySelector(`[data-id="${ditem.id}"]`);
   if(!el){renderDesmob();return;}
@@ -936,29 +928,28 @@ function refreshDesmobItemUI(ditem){
   if(ditem.status==='ok') el.querySelectorAll('.sbtn')[0].classList.add('sel-ok');
   if(ditem.status==='nok')el.querySelectorAll('.sbtn')[1].classList.add('sel-nok');
   const ob=el.querySelector('.obs-box');
-  if(ob){ob.classList.toggle('show',ditem.status==='nok');if(ditem.status!=='nok'){const ta=ob.querySelector('textarea');if(ta)ta.value='';}};
+  if(ob){ob.classList.toggle('show',ditem.status==='nok');if(ditem.status!=='nok'){const ta=ob.querySelector('textarea');if(ta)ta.value='';}}
   if(ditem.status==='nok'&&ob){const ta=ob.querySelector('textarea');if(ta)setTimeout(()=>ta.focus(),60);}
   updateDesmobProgress();
 }
-
-function setDesmobilized(id, val){
+function setDesmobilized(id,val){
   if(!desmobState)return;
-  const ditem=desmobState.items.find(i=>i.id===id);if(!ditem)return;
-  ditem.desmobilized = ditem.desmobilized===val ? null : val;
-  saveDesmob();refreshDesmobItemUI(ditem);
+  const d=desmobState.items.find(i=>i.id===id);if(!d)return;
+  d.desmobilized=d.desmobilized===val?null:val;
+  saveDesmob();refreshDesmobItemUI(d);
 }
 function setDesmobStatus(id,status){
   if(!desmobState)return;
-  const ditem=desmobState.items.find(i=>i.id===id);if(!ditem)return;
-  ditem.status=ditem.status===status?null:status;
-  if(ditem.status!=='nok')ditem.obs='';
-  saveDesmob();refreshDesmobItemUI(ditem);
+  const d=desmobState.items.find(i=>i.id===id);if(!d)return;
+  d.status=d.status===status?null:status;
+  if(d.status!=='nok')d.obs='';
+  saveDesmob();refreshDesmobItemUI(d);
 }
-function onDesmobObs(id,val){if(!desmobState)return;const ditem=desmobState.items.find(i=>i.id===id);if(ditem){ditem.obs=val;saveDesmob();}}
+function onDesmobObs(id,val){if(!desmobState)return;const d=desmobState.items.find(i=>i.id===id);if(d){d.obs=val;saveDesmob();}}
 function clearDesmobItem(id){
   if(!desmobState)return;
-  const ditem=desmobState.items.find(i=>i.id===id);if(!ditem)return;
-  ditem.status=null;ditem.desmobilized=null;ditem.obs='';saveDesmob();
+  const d=desmobState.items.find(i=>i.id===id);if(!d)return;
+  d.status=null;d.desmobilized=null;d.obs='';saveDesmob();
   const el=document.querySelector(`[data-id="${id}"]`);
   if(!el){renderDesmob();return;}
   el.className=el.className.replace(/dcombo-\S+/g,'').trim()+' dcombo-pend expanded';
@@ -971,15 +962,10 @@ function clearDesmobItem(id){
 }
 function resetDesmob(){
   if(!confirm('Limpar tudo e remover o checklist importado?'))return;
-  desmobState=null;
-  saveDesmob();
-  renderDesmob();
-  toast('Tudo limpo ✓');
+  desmobState=null;saveDesmob();renderDesmob();toast('Tudo limpo ✓');
 }
 
-// ═══════════════════════════════════════════════════════════
-// PDF — MOBILIZAÇÃO
-// ═══════════════════════════════════════════════════════════
+// ═══ PDF — MOBILIZAÇÃO ═══════════════════════════════════════
 function generatePDF(){
   saveMeta();
   const svc=currentService();if(!svc)return;
@@ -1011,7 +997,6 @@ function generatePDF(){
   });
   y+=30;
 
-  // summary — by status + mobilized
   const c=mobCounts(svc.items);
   const mobN=svc.items.filter(i=>i.mobilized===true).length;
   const total=svc.items.length;
@@ -1026,27 +1011,30 @@ function generatePDF(){
   y+=26;
 
   doc.setFillColor(...cLine);doc.roundedRect(mg,y,W-mg*2,5,2,2,'F');
-  let bx=mg;[[c.ok,cOk],[c.na,cAzure],[c.nok,cNok]].forEach(([cnt,col])=>{const bw=(cnt/total)*(W-mg*2);if(bw>0){doc.setFillColor(...col);doc.rect(bx,y,bw,5,'F');}bx+=bw;});
+  let bx=mg;[[c.ok,cOk],[c.na,cAzure],[c.nok,cNok]].forEach(([cnt,col])=>{
+    const bw=(cnt/total)*(W-mg*2);if(bw>0){doc.setFillColor(...col);doc.rect(bx,y,bw,5,'F');}bx+=bw;
+  });
   y+=12;
 
-  // table
-  const cN=10,cQty=14,cMob=18,cSt=30,cCl=28,cOb=W-mg*2-cN-cQty-cMob-cSt-cCl;
+  // table — # | Qtd | ID/Unidade | Mob. | Classif. | Equipamento | Obs
+  const cN=8,cQty=12,cUID=30,cMob=16,cCl=26,cSt=36,cOb=W-mg*2-cN-cQty-cUID-cMob-cCl-cSt;
   const tH=8;
   const drawH=()=>{
     doc.setFillColor(...cInk);doc.roundedRect(mg,y,W-mg*2,tH,2,2,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
     doc.text('#',mg+2,y+5.5);
     doc.text('Qtd',mg+cN+2,y+5.5);
-    doc.text('Mob.',mg+cN+cQty+2,y+5.5);
-    doc.text('Classificação',mg+cN+cQty+cMob+2,y+5.5);
-    doc.text('EQUIPAMENTO',mg+cN+cQty+cMob+cCl+2,y+5.5);
-    doc.text('OBSERVAÇÕES',mg+cN+cQty+cMob+cCl+cSt+2,y+5.5);
+    doc.text('ID/Unidade',mg+cN+cQty+2,y+5.5);
+    doc.text('Mob.',mg+cN+cQty+cUID+2,y+5.5);
+    doc.text('Classif.',mg+cN+cQty+cUID+cMob+2,y+5.5);
+    doc.text('EQUIPAMENTO',mg+cN+cQty+cUID+cMob+cCl+2,y+5.5);
+    doc.text('OBS',mg+cN+cQty+cUID+cMob+cCl+cSt+2,y+5.5);
     y+=tH;
   };
   drawH();
 
   svc.items.forEach((item,idx)=>{
-    const obsLines=item.obs?doc.splitTextToSize(item.obs,cOb-4):[];
+    const obsLines=item.obs?doc.splitTextToSize(item.obs,cOb-2):[];
     const rh=Math.max(9,obsLines.length*4.8+6);
     if(y+rh>H-18){
       doc.addPage();
@@ -1060,24 +1048,33 @@ function generatePDF(){
     doc.text(String(idx+1).padStart(2,'0'),mg+2,y+rh/2+2);
     doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...cText);
     doc.text(String(item.qty??1),mg+cN+cQty/2+1,y+rh/2+2,{align:'center'});
-    // mob badge
+    // ID/Unidade
+    if(item.unitId){
+      doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(...cText);
+      const uidLines=doc.splitTextToSize(item.unitId,cUID-3);
+      doc.text(uidLines,mg+cN+cQty+2,y+5.5+(uidLines.length>1?0:1.5));
+    }
+    // Mob badge
     const mc=item.mobilized===true?cOk:item.mobilized===false?cNok:cMuted;
     const ml=item.mobilized===true?'Sim':item.mobilized===false?'Não':'—';
-    doc.setFillColor(...mc);doc.roundedRect(mg+cN+cQty+1,y+rh/2-3,cMob-3,6,1,1,'F');
+    doc.setFillColor(...mc);doc.roundedRect(mg+cN+cQty+cUID+1,y+rh/2-3,cMob-3,6,1,1,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
-    doc.text(ml,mg+cN+cQty+(cMob-3)/2+1,y+rh/2+1,{align:'center'});
-    // classification badge
+    doc.text(ml,mg+cN+cQty+cUID+(cMob-3)/2+1,y+rh/2+1,{align:'center'});
+    // Classif badge
     const scc=item.status==='ok'?cOk:item.status==='na'?cAzure:item.status==='nok'?cNok:cMuted;
-    const scl=item.status==='ok'?'Conforme':item.status==='na'?'Não necessário':item.status==='nok'?'C/Defeito':'Pend.';
-    doc.setFillColor(...scc);doc.roundedRect(mg+cN+cQty+cMob+1,y+rh/2-3,cCl-3,6,1,1,'F');
+    const scl=item.status==='ok'?'Conforme':item.status==='na'?'N/A':item.status==='nok'?'C/Defeito':'Pend.';
+    doc.setFillColor(...scc);doc.roundedRect(mg+cN+cQty+cUID+cMob+1,y+rh/2-3,cCl-3,6,1,1,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
-    doc.text(scl,mg+cN+cQty+cMob+(cCl-3)/2+1,y+rh/2+1,{align:'center'});
-    // name
-    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(...cText);
-    const nLines=doc.splitTextToSize(item.name,cSt-4);
-    doc.text(nLines,mg+cN+cQty+cMob+cCl+2,y+5.5+(nLines.length>1?0:1.5));
-    // obs
-    if(obsLines.length&&item.obs){doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(...cText);doc.text(obsLines,mg+cN+cQty+cMob+cCl+cSt+2,y+5.5);}
+    doc.text(scl,mg+cN+cQty+cUID+cMob+(cCl-3)/2+1,y+rh/2+1,{align:'center'});
+    // Name
+    doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(...cText);
+    const nLines=doc.splitTextToSize(item.name,cSt-3);
+    doc.text(nLines,mg+cN+cQty+cUID+cMob+cCl+2,y+5.5+(nLines.length>1?0:1.5));
+    // Obs
+    if(obsLines.length&&item.obs){
+      doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(...cText);
+      doc.text(obsLines,mg+cN+cQty+cUID+cMob+cCl+cSt+2,y+5.5);
+    }
     y+=rh;
   });
 
@@ -1087,9 +1084,7 @@ function generatePDF(){
   toast('📄 PDF gerado!');
 }
 
-// ═══════════════════════════════════════════════════════════
-// PDF — DESMOBILIZAÇÃO
-// ═══════════════════════════════════════════════════════════
+// ═══ PDF — DESMOBILIZAÇÃO ════════════════════════════════════
 function generateDesmobPDF(){
   if(!desmobState)return;
   const {jsPDF}=window.jspdf;
@@ -1112,10 +1107,10 @@ function generateDesmobPDF(){
 
   doc.setFillColor(...cFrost);doc.roundedRect(mg,y,W-mg*2,22,3,3,'F');
   doc.setDrawColor(253,230,138);doc.roundedRect(mg,y,W-mg*2,22,3,3,'S');
-  const t3=(W-mg*2)/4;
-  const mobDateLabel = desmobState.dateMob ? isoToPtbr(desmobState.dateMob) : (desmobState.sourceDate||'—');
+  const t4=(W-mg*2)/4;
+  const mobDateLabel=desmobState.dateMob?isoToPtbr(desmobState.dateMob):(desmobState.sourceDate||'—');
   [[desmobState.local||'—','LOCAL'],[desmobState.resp||'—','RESPONSÁVEL'],[mobDateLabel,'DATA MOBILIZAÇÃO'],[fDateL,'DATA DESMOBILIZAÇÃO']].forEach(([v,l],i)=>{
-    const x=mg+4+i*t3;
+    const x=mg+4+i*t4;
     doc.setFont('helvetica','bold');doc.setFontSize(7);doc.setTextColor(...cMuted);doc.text(l,x,y+7);
     doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(...cText);doc.text(String(v).substring(0,18),x,y+16);
   });
@@ -1136,26 +1131,29 @@ function generateDesmobPDF(){
   y+=26;
 
   doc.setFillColor(...cLine);doc.roundedRect(mg,y,W-mg*2,5,2,2,'F');
-  let bx=mg;[[dd.ok,cOk],[dd.nok,cNok]].forEach(([cnt,col])=>{const bw=(cnt/total)*(W-mg*2);if(bw>0){doc.setFillColor(...col);doc.rect(bx,y,bw,5,'F');}bx+=bw;});
+  let bx=mg;[[dd.ok,cOk],[dd.nok,cNok]].forEach(([cnt,col])=>{
+    const bw=(cnt/total)*(W-mg*2);if(bw>0){doc.setFillColor(...col);doc.rect(bx,y,bw,5,'F');}bx+=bw;
+  });
   y+=12;
 
-  // table
-  const cN=10,cQty=12,cDes=18,cCl=28,cSt=28,cOb=W-mg*2-cN-cQty-cDes-cCl-cSt;
+  // table — # | Qtd | ID/Unidade | Desm. | Classif. | Equipamento | Obs
+  const cN=8,cQty=12,cUID=30,cDes=16,cCl=26,cSt=36,cOb=W-mg*2-cN-cQty-cUID-cDes-cCl-cSt;
   const tH=8;
   const drawH=()=>{
     doc.setFillColor(...cBg);doc.roundedRect(mg,y,W-mg*2,tH,2,2,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
     doc.text('#',mg+2,y+5.5);doc.text('Qtd',mg+cN+2,y+5.5);
-    doc.text('Desm.',mg+cN+cQty+2,y+5.5);
-    doc.text('Classif.',mg+cN+cQty+cDes+2,y+5.5);
-    doc.text('EQUIPAMENTO',mg+cN+cQty+cDes+cCl+2,y+5.5);
-    doc.text('OBSERVAÇÕES',mg+cN+cQty+cDes+cCl+cSt+2,y+5.5);
+    doc.text('ID/Unidade',mg+cN+cQty+2,y+5.5);
+    doc.text('Desm.',mg+cN+cQty+cUID+2,y+5.5);
+    doc.text('Classif.',mg+cN+cQty+cUID+cDes+2,y+5.5);
+    doc.text('EQUIPAMENTO',mg+cN+cQty+cUID+cDes+cCl+2,y+5.5);
+    doc.text('OBS',mg+cN+cQty+cUID+cDes+cCl+cSt+2,y+5.5);
     y+=tH;
   };
   drawH();
 
   desmobState.items.forEach((ditem,idx)=>{
-    const obsLines=ditem.obs?doc.splitTextToSize(ditem.obs,cOb-4):[];
+    const obsLines=ditem.obs?doc.splitTextToSize(ditem.obs,cOb-2):[];
     const rh=Math.max(9,obsLines.length*4.8+6);
     if(y+rh>H-18){
       doc.addPage();
@@ -1169,23 +1167,32 @@ function generateDesmobPDF(){
     doc.text(String(idx+1).padStart(2,'0'),mg+2,y+rh/2+2);
     doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...cText);
     doc.text(String(ditem.qty??1),mg+cN+cQty/2+1,y+rh/2+2,{align:'center'});
-    // desmob badge
+    // ID/Unidade
+    if(ditem.unitId){
+      doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(...cText);
+      const uidLines=doc.splitTextToSize(ditem.unitId,cUID-3);
+      doc.text(uidLines,mg+cN+cQty+2,y+5.5+(uidLines.length>1?0:1.5));
+    }
+    // Desm badge
     const dc=ditem.desmobilized===true?cOk:ditem.desmobilized===false?cNok:cMuted;
     const dl=ditem.desmobilized===true?'Sim':ditem.desmobilized===false?'Não':'—';
-    doc.setFillColor(...dc);doc.roundedRect(mg+cN+cQty+1,y+rh/2-3,cDes-3,6,1,1,'F');
+    doc.setFillColor(...dc);doc.roundedRect(mg+cN+cQty+cUID+1,y+rh/2-3,cDes-3,6,1,1,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
-    doc.text(dl,mg+cN+cQty+(cDes-3)/2+1,y+rh/2+1,{align:'center'});
-    // classif badge
+    doc.text(dl,mg+cN+cQty+cUID+(cDes-3)/2+1,y+rh/2+1,{align:'center'});
+    // Classif badge
     const sc=ditem.status==='ok'?cOk:ditem.status==='nok'?cNok:cMuted;
     const sl=ditem.status==='ok'?'Conforme':ditem.status==='nok'?'N.Conforme':'Pend.';
-    doc.setFillColor(...sc);doc.roundedRect(mg+cN+cQty+cDes+1,y+rh/2-3,cCl-3,6,1,1,'F');
+    doc.setFillColor(...sc);doc.roundedRect(mg+cN+cQty+cUID+cDes+1,y+rh/2-3,cCl-3,6,1,1,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
-    doc.text(sl,mg+cN+cQty+cDes+(cCl-3)/2+1,y+rh/2+1,{align:'center'});
-    // name
-    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(...cText);
-    const nLines=doc.splitTextToSize(ditem.name,cSt-4);
-    doc.text(nLines,mg+cN+cQty+cDes+cCl+2,y+5.5+(nLines.length>1?0:1.5));
-    if(obsLines.length&&ditem.obs){doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(...cText);doc.text(obsLines,mg+cN+cQty+cDes+cCl+cSt+2,y+5.5);}
+    doc.text(sl,mg+cN+cQty+cUID+cDes+(cCl-3)/2+1,y+rh/2+1,{align:'center'});
+    // Name
+    doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(...cText);
+    const nLines=doc.splitTextToSize(ditem.name,cSt-3);
+    doc.text(nLines,mg+cN+cQty+cUID+cDes+cCl+2,y+5.5+(nLines.length>1?0:1.5));
+    if(obsLines.length&&ditem.obs){
+      doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(...cText);
+      doc.text(obsLines,mg+cN+cQty+cUID+cDes+cCl+cSt+2,y+5.5);
+    }
     y+=rh;
   });
 
@@ -1195,9 +1202,7 @@ function generateDesmobPDF(){
   toast('📄 PDF de desmobilização gerado!');
 }
 
-// ═══════════════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════════════
+// ═══ INIT ════════════════════════════════════════════════════
 renderHome();
 </script>
 </body>
