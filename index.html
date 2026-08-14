@@ -204,6 +204,45 @@ body{font-family:'IBM Plex Sans',sans-serif;background:var(--frost);color:var(--
 .btn-clear-item{background:transparent;border:1.5px solid var(--line);font-size:.78rem;color:var(--sub);cursor:pointer;padding:5px 11px;border-radius:7px;font-family:'IBM Plex Sans',sans-serif;font-weight:500;display:flex;align-items:center;gap:4px;transition:all .15s;}
 .btn-clear-item:hover{background:var(--pend-bg);border-color:var(--pend);color:var(--ink);}
 
+/* SUBITEMS (hierarquia) */
+.subitems-section{margin-top:4px;margin-bottom:10px;padding-top:10px;border-top:1px dashed var(--line);}
+.subitems-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.subitems-head .panel-section{margin:0;}
+.subitems-count{font-size:.62rem;font-weight:700;background:var(--mist);color:var(--royal);padding:2px 8px;border-radius:20px;}
+.subitems-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px;}
+.subitem{background:var(--frost);border:1.5px solid var(--line);border-radius:9px;overflow:hidden;margin-left:14px;position:relative;}
+.subitem::before{content:'';position:absolute;left:-14px;top:0;bottom:0;width:14px;border-left:2px solid var(--line);border-bottom:2px solid var(--line);border-bottom-left-radius:8px;height:22px;}
+.subitem.expanded{border-color:var(--azure);box-shadow:0 2px 10px rgba(12,35,64,.1);}
+.des-item .subitem.expanded{border-color:var(--amb-lite);}
+.subitem.combo-ok-mob{border-left:3px solid var(--ok);}
+.subitem.combo-ok-nomob{border-left:3px solid #6ee7b7;}
+.subitem.combo-na-mob{border-left:3px solid var(--na);}
+.subitem.combo-na-nomob{border-left:3px solid #93c5fd;}
+.subitem.combo-nok-mob{border-left:3px solid var(--nok);}
+.subitem.combo-nok-nomob{border-left:3px solid #fca5a5;}
+.subitem.combo-pend{border-left:3px solid var(--line);}
+.subitem.dcombo-ok-des{border-left:3px solid var(--ok);}
+.subitem.dcombo-ok-nodes{border-left:3px solid #6ee7b7;}
+.subitem.dcombo-nok-des{border-left:3px solid var(--nok);}
+.subitem.dcombo-nok-nodes{border-left:3px solid #fca5a5;}
+.subitem.dcombo-pend{border-left:3px solid var(--line);}
+.subitem-row{display:flex;align-items:center;gap:7px;padding:9px 10px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;background:#fff;}
+.subitem-row:active{background:var(--frost);}
+.subitem-name{flex:1;min-width:0;font-size:.85rem;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.subitem-del{flex-shrink:0;width:22px;height:22px;border:none;background:transparent;color:var(--pend);font-size:.85rem;cursor:pointer;border-radius:6px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.subitem-del:hover{background:var(--nok-mist);color:var(--nok);}
+.subitem-panel{display:none;padding:10px;background:#fff;border-top:1px solid var(--line);}
+.subitem.expanded .subitem-panel{display:block;}
+.add-subitem-row{display:flex;gap:8px;margin-left:14px;}
+.add-subitem-row input{flex:1;padding:8px 11px;border:1.5px dashed var(--line);border-radius:8px;font-family:'IBM Plex Sans',sans-serif;font-size:.82rem;color:var(--text);background:#fff;outline:none;transition:border-color .18s;}
+.add-subitem-row input:focus{border-color:var(--azure);border-style:solid;}
+.add-subitem-row button{flex-shrink:0;background:var(--royal);color:#fff;border:none;padding:0 16px;border-radius:8px;font-size:.8rem;font-weight:700;cursor:pointer;transition:all .15s;}
+.add-subitem-row button:hover{background:var(--azure);}
+.des-item .add-subitem-row button{background:var(--amb);}
+.des-item .add-subitem-row button:hover{background:var(--amb-mid);}
+.des-item .add-subitem-row input:focus{border-color:var(--amb-mid);}
+.subitem-tag{font-size:.6rem;font-weight:700;background:var(--mist);color:var(--royal);padding:2px 7px;border-radius:20px;flex-shrink:0;}
+
 /* FOOTER */
 .footer-bar{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:12px 16px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;z-index:190;}
 .btn-pdf{background:linear-gradient(135deg,var(--ink),var(--royal));color:#fff;border:none;padding:12px 22px;border-radius:var(--r);font-family:'Barlow Condensed',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;gap:7px;cursor:pointer;box-shadow:0 3px 14px rgba(12,35,64,.35);transition:all .18s;}
@@ -365,6 +404,7 @@ function today(){return new Date().toLocaleDateString('pt-BR');}
 function ptbrToISO(s){if(!s)return '';const p=s.split('/');if(p.length!==3)return '';return `${p[2]}-${p[1].padStart(2,'0')}-${p[0].padStart(2,'0')}`;}
 function isoToPtbr(s){if(!s)return '—';const p=s.split('-');if(p.length!==3)return s;return `${p[2]}/${p[1]}/${p[0]}`;}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600);}
+function newChildId(parentId){return parentId*1000+Math.floor(Math.random()*900)+100;}
 
 // ═══ COMBO LOGIC — MOBILIZAÇÃO ══════════════════════════════
 function mobComboClass(item){
@@ -407,9 +447,19 @@ function desComboClass(d){
   return 'dcombo-pend';
 }
 
+function flattenAll(items){
+  const out=[];
+  items.forEach(i=>{out.push(i);if(i.children&&i.children.length)i.children.forEach(c=>out.push(c));});
+  return out;
+}
 function mobCounts(items){
   const c={ok:0,na:0,nok:0,pend:0};
-  items.forEach(i=>{if(i.status)c[i.status]++;else c.pend++;});
+  flattenAll(items).forEach(i=>{if(i.status)c[i.status]++;else c.pend++;});
+  return c;
+}
+function desCounts(items){
+  const c={ok:0,nok:0,pend:0};
+  flattenAll(items).forEach(i=>{if(i.status==='ok')c.ok++;else if(i.status==='nok')c.nok++;else c.pend++;});
   return c;
 }
 
@@ -423,17 +473,34 @@ function defaultItems(serviceId){
   else if(serviceId===5) names=["Cintas e catracas","Pranchas de madeira","Cones de sinalização","EPIs da equipe"];
   else                   names=Array.from({length:5},(_,i)=>`Item extra ${i+1}`);
   // unitId = campo de identificação da unidade (ex: "Unidade 2", "Serial 004")
-  return names.map((name,i)=>({id:serviceId*1000+(i+1),name,unitId:'',status:null,mobilized:null,obs:'',qty:1}));
+  const items=names.map((name,i)=>({id:serviceId*1000+(i+1),name,unitId:'',status:null,mobilized:null,obs:'',qty:1,children:[]}));
+  // exemplo de hierarquia: uma caixa de ferramentas com subitens próprios
+  const boxId=serviceId*1000+names.length+1;
+  items.push({
+    id:boxId,name:'Caixa de Ferramentas',unitId:'',status:null,mobilized:null,obs:'',qty:1,
+    children:[
+      {id:boxId*1000+1,name:'Chave de fenda',unitId:'',status:null,mobilized:null,obs:'',qty:2,children:[]},
+      {id:boxId*1000+2,name:'Alicate',unitId:'',status:null,mobilized:null,obs:'',qty:1,children:[]},
+      {id:boxId*1000+3,name:'Chave inglesa',unitId:'',status:null,mobilized:null,obs:'',qty:1,children:[]}
+    ]
+  });
+  return items;
 }
 
 function loadState(){
   try{
-    const s=localStorage.getItem('mob_state_v5');
+    const s=localStorage.getItem('mob_state_v6');
     if(s){
       const p=JSON.parse(s);
       p.services.forEach(svc=>svc.items.forEach(it=>{
         if(it.mobilized===undefined)it.mobilized=null;
         if(it.unitId===undefined)it.unitId='';
+        if(!Array.isArray(it.children))it.children=[];
+        it.children.forEach(c=>{
+          if(c.mobilized===undefined)c.mobilized=null;
+          if(c.unitId===undefined)c.unitId='';
+          if(!Array.isArray(c.children))c.children=[];
+        });
       }));
       return p;
     }
@@ -444,18 +511,29 @@ function loadState(){
 
 let state=loadState();
 let currentServiceId=null;
-function save(){localStorage.setItem('mob_state_v5',JSON.stringify(state));}
+function save(){localStorage.setItem('mob_state_v6',JSON.stringify(state));}
 function currentService(){return state.services.find(s=>s.id===currentServiceId);}
+function findItem(items,parentId,id){
+  if(!parentId)return items.find(i=>i.id===id);
+  const p=items.find(i=>i.id===parentId);
+  return p?p.children.find(c=>c.id===id):null;
+}
 
 // ═══ DESMOBILIZAÇÃO — STATE ══════════════════════════════════
 function loadDesmob(){
   try{
-    const s=localStorage.getItem('desmob_v2');
+    const s=localStorage.getItem('desmob_v3');
     if(s){
       const p=JSON.parse(s);
       p.items.forEach(i=>{
         if(i.desmobilized===undefined)i.desmobilized=null;
         if(i.unitId===undefined)i.unitId='';
+        if(!Array.isArray(i.children))i.children=[];
+        i.children.forEach(c=>{
+          if(c.desmobilized===undefined)c.desmobilized=null;
+          if(c.unitId===undefined)c.unitId='';
+          if(!Array.isArray(c.children))c.children=[];
+        });
       });
       return p;
     }
@@ -463,7 +541,12 @@ function loadDesmob(){
   return null;
 }
 let desmobState=loadDesmob();
-function saveDesmob(){if(desmobState)localStorage.setItem('desmob_v2',JSON.stringify(desmobState));else localStorage.removeItem('desmob_v2');}
+function saveDesmob(){if(desmobState)localStorage.setItem('desmob_v3',JSON.stringify(desmobState));else localStorage.removeItem('desmob_v3');}
+function findDesItem(items,parentId,id){
+  if(!parentId)return items.find(i=>i.id===id);
+  const p=items.find(i=>i.id===parentId);
+  return p?p.children.find(c=>c.id===id):null;
+}
 
 // ═══ HOME ════════════════════════════════════════════════════
 function renderHome(){
@@ -471,7 +554,7 @@ function renderHome(){
   list.innerHTML='';
   state.services.forEach(svc=>{
     const c=mobCounts(svc.items);
-    const total=svc.items.length||1;
+    const total=flattenAll(svc.items).length||1;
     const card=document.createElement('div');
     card.className='service-card';
     card.innerHTML=`
@@ -505,9 +588,8 @@ function renderHome(){
   let barHtml='';
   let subTxt='Importe um arquivo de mobilização para começar';
   if(desmobState?.items?.length){
-    const dd={ok:0,nok:0,pend:0};
-    desmobState.items.forEach(i=>{if(i.status==='ok')dd.ok++;else if(i.status==='nok')dd.nok++;else dd.pend++;});
-    const dt=desmobState.items.length||1;
+    const dd=desCounts(desmobState.items);
+    const dt=flattenAll(desmobState.items).length||1;
     statsHtml=`${dd.ok?`<span class="dsc-s ok">${dd.ok} Conf.</span>`:''}${dd.nok?`<span class="dsc-s nok">${dd.nok} N.Conf.</span>`:''}${dd.pend?`<span class="dsc-s pend">${dd.pend} Pend.</span>`:''}`;
     barHtml=`<div class="dsc-bar"><div class="dsc-bar-fill"><div class="dsc-bar-ok" style="width:${dd.ok/dt*100}%"></div><div class="dsc-bar-nok" style="width:${dd.nok/dt*100}%"></div></div></div>`;
     subTxt=`Origem: ${esc(desmobState.sourceName||'—')}`;
@@ -552,56 +634,35 @@ function saveMeta(){
 }));
 
 // ═══ MOBILIZAÇÃO — RENDER ════════════════════════════════════
-function renderChecklist(){
-  const svc=currentService();if(!svc)return;
-  document.getElementById('cl-title').textContent=svc.name;
-  const list=document.getElementById('items-list');
-  const expanded=new Set();
-  list.querySelectorAll('.item.expanded').forEach(el=>expanded.add(+el.dataset.id));
-  list.innerHTML='';
-  svc.items.forEach((item,idx)=>{
-    const isExp=expanded.has(item.id);
-    const el=document.createElement('div');
-    el.className=`item ${mobComboClass(item)}${isExp?' expanded':''}`;
-    el.dataset.id=item.id;
-    // show unitId tag in row if filled
-    const idTag=item.unitId?`<span class="item-id-tag" title="${esc(item.unitId)}">${esc(item.unitId)}</span>`:'';
-    el.innerHTML=`
-      <div class="item-row" onclick="toggleItem(this,event)">
-        <div class="item-num">${String(idx+1).padStart(2,'0')}</div>
-        <div class="item-name-wrap"><div class="item-name-div">${esc(item.name)}</div></div>
-        ${idTag}
-        <span class="combo-badge ${mobComboBadgeClass(item)}">${mobComboLabel(item)}</span>
-        <span class="item-chevron">▾</span>
-      </div>
-      <div class="item-panel">
-
+function renderMobPanelInner(item,parentId){
+  const idAttr=parentId?`${parentId},${item.id}`:`${item.id},null`;
+  return `
         <div class="panel-section">Identificação da unidade</div>
         <div class="id-row">
           <span class="id-label">🏷 Nome / Marca</span>
           <input class="id-input" type="text" value="${esc(item.unitId)}"
             placeholder="Ex: PIT 1, Gerador 2..."
-            oninput="onUnitId(${item.id},this.value)"/>
+            oninput="onUnitId(${item.id},${parentId?parentId:'null'},this.value)"/>
         </div>
 
         <div class="panel-section">1. Mobilização</div>
         <div class="yn-row">
           <span class="yn-label">Foi mobilizado?</span>
           <div class="yn-btns">
-            <button class="yn-btn${item.mobilized===true?' sel-yes':''}"  onclick="setMobilized(${item.id},true)">Sim</button>
-            <button class="yn-btn${item.mobilized===false?' sel-no':''}"  onclick="setMobilized(${item.id},false)">Não</button>
+            <button class="yn-btn${item.mobilized===true?' sel-yes':''}"  onclick="setMobilized(${item.id},${parentId?parentId:'null'},true)">Sim</button>
+            <button class="yn-btn${item.mobilized===false?' sel-no':''}"  onclick="setMobilized(${item.id},${parentId?parentId:'null'},false)">Não</button>
           </div>
         </div>
 
         <div class="panel-section">2. Classificação</div>
         <div class="status-btns three">
-          <button class="sbtn${item.status==='ok'?' sel-ok':''}"  onclick="setMobStatus(${item.id},'ok')">
+          <button class="sbtn${item.status==='ok'?' sel-ok':''}"  onclick="setMobStatus(${item.id},${parentId?parentId:'null'},'ok')">
             <span class="sicon">✅</span>Conforme
           </button>
-          <button class="sbtn${item.status==='na'?' sel-na':''}"  onclick="setMobStatus(${item.id},'na')">
+          <button class="sbtn${item.status==='na'?' sel-na':''}"  onclick="setMobStatus(${item.id},${parentId?parentId:'null'},'na')">
             <span class="sicon">➖</span>Não Necessário
           </button>
-          <button class="sbtn${item.status==='nok'?' sel-nok':''}" onclick="setMobStatus(${item.id},'nok')">
+          <button class="sbtn${item.status==='nok'?' sel-nok':''}" onclick="setMobStatus(${item.id},${parentId?parentId:'null'},'nok')">
             <span class="sicon">⚠️</span>Com Defeito
           </button>
         </div>
@@ -609,22 +670,93 @@ function renderChecklist(){
         <div class="qty-row">
           <span class="qty-label">📦 Quantidade:</span>
           <div class="qty-ctrl">
-            <button class="qty-btn" onclick="changeQty(${item.id},-1)">−</button>
-            <input  class="qty-val" type="number" min="0" value="${item.qty??1}" oninput="onQty(${item.id},this.value)"/>
-            <button class="qty-btn" onclick="changeQty(${item.id},+1)">+</button>
+            <button class="qty-btn" onclick="changeQty(${item.id},${parentId?parentId:'null'},-1)">−</button>
+            <input  class="qty-val" type="number" min="0" value="${item.qty??1}" oninput="onQty(${item.id},${parentId?parentId:'null'},this.value)"/>
+            <button class="qty-btn" onclick="changeQty(${item.id},${parentId?parentId:'null'},+1)">+</button>
           </div>
         </div>
 
         <div class="obs-box${item.status==='nok'?' show':''}">
           <div class="obs-label">⚠️ Descrição do defeito</div>
-          <textarea placeholder="Descreva o problema encontrado…" oninput="onObs(${item.id},this.value)">${esc(item.obs)}</textarea>
+          <textarea placeholder="Descreva o problema encontrado…" oninput="onObs(${item.id},${parentId?parentId:'null'},this.value)">${esc(item.obs)}</textarea>
         </div>
 
         <div class="item-actions">
-          <button class="btn-clear-item" onclick="clearItem(${item.id})">↺ Limpar</button>
+          <button class="btn-clear-item" onclick="clearItem(${item.id},${parentId?parentId:'null'})">↺ Limpar</button>
+        </div>`;
+}
+
+function renderSubitemsSection(item){
+  const kids=item.children||[];
+  let kidsHtml='';
+  kids.forEach((child,idx)=>{
+    const idTag=child.unitId?`<span class="item-id-tag" title="${esc(child.unitId)}">${esc(child.unitId)}</span>`:'';
+    kidsHtml+=`
+      <div class="subitem item ${mobComboClass(child)}" data-id="${child.id}" data-parent="${item.id}">
+        <div class="subitem-row" onclick="toggleItem(this,event)">
+          <span class="subitem-tag">×${child.qty??1}</span>
+          <div class="subitem-name">${esc(child.name)}</div>
+          ${idTag}
+          <span class="combo-badge ${mobComboBadgeClass(child)}">${mobComboLabel(child)}</span>
+          <button class="subitem-del" title="Remover subitem" onclick="event.stopPropagation();removeChild(${item.id},${child.id})">✕</button>
+          <span class="item-chevron">▾</span>
+        </div>
+        <div class="subitem-panel item-panel" style="display:none;">
+          ${renderMobPanelInner(child,item.id)}
         </div>
       </div>`;
+  });
+  return `
+        <div class="subitems-section">
+          <div class="subitems-head">
+            <span class="panel-section">🧰 Subitens</span>
+            ${kids.length?`<span class="subitems-count">${kids.length}</span>`:''}
+          </div>
+          <div class="subitems-list">${kidsHtml}</div>
+          <div class="add-subitem-row">
+            <input type="text" placeholder="Nome do subitem (ex: Chave de fenda)" id="add-sub-${item.id}"
+              onkeydown="if(event.key==='Enter'){addChild(${item.id});event.preventDefault();}"/>
+            <button onclick="addChild(${item.id})">+ Adicionar</button>
+          </div>
+        </div>`;
+}
+
+function renderChecklist(){
+  const svc=currentService();if(!svc)return;
+  document.getElementById('cl-title').textContent=svc.name;
+  const list=document.getElementById('items-list');
+  const expanded=new Set();
+  list.querySelectorAll('.item.expanded').forEach(el=>expanded.add(el.dataset.id+'|'+(el.dataset.parent||'')));
+  list.innerHTML='';
+  svc.items.forEach((item,idx)=>{
+    const isExp=expanded.has(item.id+'|');
+    const el=document.createElement('div');
+    el.className=`item ${mobComboClass(item)}${isExp?' expanded':''}`;
+    el.dataset.id=item.id;
+    // show unitId tag in row if filled
+    const idTag=item.unitId?`<span class="item-id-tag" title="${esc(item.unitId)}">${esc(item.unitId)}</span>`:'';
+    const kidCount=item.children&&item.children.length?`<span class="item-qty-tag" title="Subitens">🧰 ${item.children.length}</span>`:'';
+    el.innerHTML=`
+      <div class="item-row" onclick="toggleItem(this,event)">
+        <div class="item-num">${String(idx+1).padStart(2,'0')}</div>
+        <div class="item-name-wrap"><div class="item-name-div">${esc(item.name)}</div></div>
+        ${idTag}
+        ${kidCount}
+        <span class="combo-badge ${mobComboBadgeClass(item)}">${mobComboLabel(item)}</span>
+        <span class="item-chevron">▾</span>
+      </div>
+      <div class="item-panel">
+        ${renderMobPanelInner(item,null)}
+        ${renderSubitemsSection(item)}
+      </div>`;
     list.appendChild(el);
+    // restore expanded subitems
+    item.children.forEach(child=>{
+      if(expanded.has(child.id+'|'+item.id)){
+        const subEl=el.querySelector(`.subitem[data-id="${child.id}"]`);
+        if(subEl)subEl.classList.add('expanded');
+      }
+    });
   });
   updateProgress();
 }
@@ -632,123 +764,144 @@ function renderChecklist(){
 function updateProgress(){
   const svc=currentService();if(!svc)return;
   const c=mobCounts(svc.items);
-  const n=Math.max(svc.items.length,1);
+  const flat=flattenAll(svc.items);
+  const n=Math.max(flat.length,1);
   document.getElementById('seg-ok').style.width =(c.ok /n*100)+'%';
   document.getElementById('seg-na').style.width =(c.na /n*100)+'%';
   document.getElementById('seg-nok').style.width=(c.nok/n*100)+'%';
-  const mob=svc.items.filter(i=>i.mobilized===true).length;
+  const mob=flat.filter(i=>i.mobilized===true).length;
   document.getElementById('ps-chips').innerHTML=`
     <div class="chip"><div class="chip-dot cdok"></div>${mob} Mob.</div>
     <div class="chip"><div class="chip-dot cdok" style="background:var(--ok)"></div>${c.ok} Conf.</div>
     <div class="chip"><div class="chip-dot cdna"></div>${c.na} N/A</div>
     <div class="chip"><div class="chip-dot cdnok"></div>${c.nok} Defeito</div>
     <div class="chip"><div class="chip-dot cdpend"></div>${c.pend} Pend.</div>`;
-  document.getElementById('count-pill').textContent=`${svc.items.length} item${svc.items.length!==1?'s':''}`;
+  document.getElementById('count-pill').textContent=`${flat.length} item${flat.length!==1?'s':''}`;
 }
 
 // ═══ MOBILIZAÇÃO — INTERACTIONS ══════════════════════════════
 function toggleItem(rowEl,e){
   if(e.target.closest('button')||e.target.closest('input')||e.target.closest('textarea'))return;
   rowEl.closest('.item')?.classList.toggle('expanded');
+  const sub=rowEl.closest('.subitem');
+  if(sub){
+    const panel=sub.querySelector('.subitem-panel');
+    if(panel)panel.style.display=sub.classList.contains('expanded')?'block':'none';
+  }
 }
 
-function refreshItemUI(item){
-  const el=document.querySelector(`[data-id="${item.id}"]`);
+function refreshItemUI(item,parentEl){
+  const el=parentEl||document.querySelector(`.item[data-id="${item.id}"]:not(.subitem)`);
   if(!el){renderChecklist();return;}
   el.className=el.className.replace(/combo-\S+/g,'').trim();
   el.classList.add(mobComboClass(item));
   if(el.classList.contains('expanded'))el.classList.add('expanded');
-  const badge=el.querySelector('.combo-badge');
-  badge.className=`combo-badge ${mobComboBadgeClass(item)}`;
-  badge.textContent=mobComboLabel(item);
+  const badge=el.querySelector(':scope > .item-row .combo-badge, :scope > .subitem-row .combo-badge');
+  if(badge){
+    badge.className=`combo-badge ${mobComboBadgeClass(item)}`;
+    badge.textContent=mobComboLabel(item);
+  }
+  const row=el.querySelector(':scope > .item-row, :scope > .subitem-row');
   // update id tag in row
-  let idTag=el.querySelector('.item-id-tag');
+  let idTag=row?row.querySelector('.item-id-tag'):null;
   if(item.unitId){
-    if(!idTag){
+    if(!idTag&&row){
       idTag=document.createElement('span');
       idTag.className='item-id-tag';
-      const chevron=el.querySelector('.item-chevron');
-      el.querySelector('.item-row').insertBefore(idTag,badge);
+      row.insertBefore(idTag,badge);
     }
-    idTag.textContent=item.unitId;
-    idTag.title=item.unitId;
+    if(idTag){idTag.textContent=item.unitId;idTag.title=item.unitId;}
   } else {
     if(idTag)idTag.remove();
   }
-  const ynBtns=el.querySelectorAll('.yn-btn');
+  const ynBtns=el.querySelectorAll(':scope > .item-panel .yn-btn, :scope > .subitem-panel .yn-btn');
   if(ynBtns.length===2){
     ynBtns[0].className='yn-btn'+(item.mobilized===true?' sel-yes':'');
     ynBtns[1].className='yn-btn'+(item.mobilized===false?' sel-no':'');
   }
   const statusList=['ok','na','nok'];
-  el.querySelectorAll('.sbtn').forEach((b,i)=>{b.className='sbtn';if(item.status===statusList[i])b.classList.add(`sel-${statusList[i]}`);});
-  const ob=el.querySelector('.obs-box');
+  const sbtns=el.querySelectorAll(':scope > .item-panel .sbtn, :scope > .subitem-panel .sbtn');
+  sbtns.forEach((b,i)=>{b.className='sbtn';if(item.status===statusList[i])b.classList.add(`sel-${statusList[i]}`);});
+  const ob=el.querySelector(':scope > .item-panel .obs-box, :scope > .subitem-panel .obs-box');
   if(ob)ob.classList.toggle('show',item.status==='nok');
   if(item.status!=='nok'&&ob){const ta=ob.querySelector('textarea');if(ta)ta.value='';}
   if(item.status==='nok'&&ob){const ta=ob.querySelector('textarea');if(ta)setTimeout(()=>ta.focus(),60);}
   updateProgress();
 }
 
-function onUnitId(id,val){
+function onUnitId(id,parentId,val){
   const svc=currentService();if(!svc)return;
-  const item=svc.items.find(i=>i.id===id);
+  const item=findItem(svc.items,parentId,id);
   if(!item)return;
   item.unitId=val;save();
-  // update tag in row without full re-render
-  const el=document.querySelector(`[data-id="${id}"]`);
+  const el=document.querySelector(parentId?`.subitem[data-id="${id}"][data-parent="${parentId}"]`:`.item[data-id="${id}"]:not(.subitem)`);
   if(!el)return;
-  let idTag=el.querySelector('.item-id-tag');
+  const row=el.querySelector(':scope > .item-row, :scope > .subitem-row');
+  const badge=row.querySelector('.combo-badge');
+  let idTag=row.querySelector('.item-id-tag');
   if(val){
     if(!idTag){
       idTag=document.createElement('span');
       idTag.className='item-id-tag';
-      const badge=el.querySelector('.combo-badge');
-      el.querySelector('.item-row').insertBefore(idTag,badge);
+      row.insertBefore(idTag,badge);
     }
     idTag.textContent=val;idTag.title=val;
   } else {
     if(idTag)idTag.remove();
   }
 }
-function setMobilized(id,val){
+function setMobilized(id,parentId,val){
   const svc=currentService();if(!svc)return;
-  const item=svc.items.find(i=>i.id===id);if(!item)return;
+  const item=findItem(svc.items,parentId,id);if(!item)return;
   item.mobilized=item.mobilized===val?null:val;
-  save();refreshItemUI(item);
+  save();refreshItemUI(item,document.querySelector(parentId?`.subitem[data-id="${id}"][data-parent="${parentId}"]`:`.item[data-id="${id}"]:not(.subitem)`));
 }
-function setMobStatus(id,status){
+function setMobStatus(id,parentId,status){
   const svc=currentService();if(!svc)return;
-  const item=svc.items.find(i=>i.id===id);if(!item)return;
+  const item=findItem(svc.items,parentId,id);if(!item)return;
   item.status=item.status===status?null:status;
   if(item.status!=='nok')item.obs='';
-  save();refreshItemUI(item);
+  save();refreshItemUI(item,document.querySelector(parentId?`.subitem[data-id="${id}"][data-parent="${parentId}"]`:`.item[data-id="${id}"]:not(.subitem)`));
 }
-function onObs(id,val){const svc=currentService();if(!svc)return;const item=svc.items.find(i=>i.id===id);if(item){item.obs=val;save();}}
-function onQty(id,val){const svc=currentService();if(!svc)return;const item=svc.items.find(i=>i.id===id);if(item){item.qty=Math.max(0,parseInt(val)||0);save();}}
-function changeQty(id,delta){
+function onObs(id,parentId,val){const svc=currentService();if(!svc)return;const item=findItem(svc.items,parentId,id);if(item){item.obs=val;save();}}
+function onQty(id,parentId,val){const svc=currentService();if(!svc)return;const item=findItem(svc.items,parentId,id);if(item){item.qty=Math.max(0,parseInt(val)||0);save();}}
+function changeQty(id,parentId,delta){
   const svc=currentService();if(!svc)return;
-  const item=svc.items.find(i=>i.id===id);if(!item)return;
+  const item=findItem(svc.items,parentId,id);if(!item)return;
   item.qty=Math.max(0,(item.qty??1)+delta);save();
-  const el=document.querySelector(`[data-id="${id}"]`);
+  const el=document.querySelector(parentId?`.subitem[data-id="${id}"][data-parent="${parentId}"]`:`.item[data-id="${id}"]:not(.subitem)`);
   if(el){const inp=el.querySelector('.qty-val');if(inp)inp.value=item.qty;}
 }
-function clearItem(id){
+function clearItem(id,parentId){
   const svc=currentService();if(!svc)return;
-  const item=svc.items.find(i=>i.id===id);if(!item)return;
+  const item=findItem(svc.items,parentId,id);if(!item)return;
   item.status=null;item.mobilized=null;item.obs='';item.qty=1;item.unitId='';save();
-  const el=document.querySelector(`[data-id="${id}"]`);
-  if(!el){renderChecklist();return;}
-  el.className=el.className.replace(/combo-\S+/g,'').trim()+' combo-pend expanded';
-  const badge=el.querySelector('.combo-badge');
-  badge.className='combo-badge cb-pend';badge.textContent='Não preenchido';
-  const idTag=el.querySelector('.item-id-tag');if(idTag)idTag.remove();
-  const idInp=el.querySelector('.id-input');if(idInp)idInp.value='';
-  const ynBtns=el.querySelectorAll('.yn-btn');
-  ynBtns.forEach(b=>{b.className=b.className.replace(/\bsel-yes\b|\bsel-no\b/g,'').trim();});
-  el.querySelectorAll('.sbtn').forEach(b=>b.className='sbtn');
-  const ob=el.querySelector('.obs-box');if(ob){ob.classList.remove('show');const ta=ob.querySelector('textarea');if(ta)ta.value='';}
-  const qv=el.querySelector('.qty-val');if(qv)qv.value=1;
-  updateProgress();toast('Limpo ✓');
+  renderChecklist();
+  toast('Limpo ✓');
+}
+function addChild(parentId){
+  const svc=currentService();if(!svc)return;
+  const parent=svc.items.find(i=>i.id===parentId);if(!parent)return;
+  const input=document.getElementById(`add-sub-${parentId}`);
+  const name=(input?.value||'').trim();
+  if(!name){toast('Digite um nome para o subitem.');return;}
+  if(!Array.isArray(parent.children))parent.children=[];
+  parent.children.push({id:newChildId(parentId),name,unitId:'',status:null,mobilized:null,obs:'',qty:1,children:[]});
+  save();renderChecklist();
+  // re-expand parent
+  const el=document.querySelector(`.item[data-id="${parentId}"]:not(.subitem)`);
+  if(el)el.classList.add('expanded');
+  toast('Subitem adicionado ✓');
+}
+function removeChild(parentId,childId){
+  const svc=currentService();if(!svc)return;
+  const parent=svc.items.find(i=>i.id===parentId);if(!parent)return;
+  if(!confirm('Remover este subitem?'))return;
+  parent.children=parent.children.filter(c=>c.id!==childId);
+  save();renderChecklist();
+  const el=document.querySelector(`.item[data-id="${parentId}"]:not(.subitem)`);
+  if(el)el.classList.add('expanded');
+  toast('Subitem removido ✓');
 }
 function resetAll(){
   if(!confirm('Limpar tudo deste serviço?'))return;
@@ -766,23 +919,25 @@ function exportJSON(){
   saveMeta();
   const svc=currentService();if(!svc)return;
   const fDateL=svc.date?new Date(svc.date+'T12:00').toLocaleDateString('pt-BR'):today();
-  const mobilizedItems=svc.items.filter(i=>i.mobilized===true);
+  const mapMobilized=arr=>arr.filter(i=>i.mobilized===true).map(i=>({
+    name:i.name,unitId:i.unitId||'',qty:i.qty??1,
+    mobilizationStatus:i.status||'pend',mobilized:true,
+    children:mapMobilized(i.children||[])
+  }));
+  const mobilizedItems=mapMobilized(svc.items);
   if(!mobilizedItems.length){toast('⚠ Nenhum item marcado como Mobilizado.');return;}
   const payload={
     _info:'CheckList Mobilização — exportação para desmobilização',
     serviceName:svc.name,local:svc.local||'',resp:svc.resp||'',date:fDateL,
     exportedAt:new Date().toISOString(),
-    items:mobilizedItems.map(i=>({
-      name:i.name,unitId:i.unitId||'',qty:i.qty??1,
-      mobilizationStatus:i.status||'pend',mobilized:true
-    }))
+    items:mobilizedItems
   };
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
   a.download=`mobilizacao_${svc.name.replace(/\s+/g,'_')}_${fDateL.replace(/\//g,'')}.json`;
   a.click();URL.revokeObjectURL(a.href);
-  toast(`⬇ Arquivo exportado — ${mobilizedItems.length} itens mobilizados`);
+  toast(`⬇ Arquivo exportado — ${flattenAll(mobilizedItems).length} itens mobilizados`);
 }
 
 // ═══ IMPORT JSON ═════════════════════════════════════════════
@@ -793,19 +948,25 @@ function importJSON(event){
     try{
       const data=JSON.parse(e.target.result);
       if(!data.items||!Array.isArray(data.items))throw new Error();
+      let counter=0;
+      const mapItems=(arr)=>arr.map(item=>{
+        counter++;
+        return {
+          id:20000+counter*10,name:item.name||`Item ${counter}`,
+          unitId:item.unitId||'',
+          qty:item.qty??1,mobStatus:item.mobilizationStatus||'pend',
+          status:null,desmobilized:null,obs:'',
+          children:mapItems(item.children||[])
+        };
+      });
       desmobState={
         sourceName:data.serviceName||file.name,sourceDate:data.date||'',
         local:data.local||'',resp:data.resp||'',
         date:new Date().toISOString().split('T')[0],
-        items:data.items.map((item,i)=>({
-          id:20000+i,name:item.name||`Item ${i+1}`,
-          unitId:item.unitId||'',
-          qty:item.qty??1,mobStatus:item.mobilizationStatus||'pend',
-          status:null,desmobilized:null,obs:''
-        }))
+        items:mapItems(data.items)
       };
       saveDesmob();renderDesmob();
-      toast(`✅ ${desmobState.items.length} equipamentos importados`);
+      toast(`✅ ${flattenAll(desmobState.items).length} equipamentos importados`);
     }catch(err){toast('❌ Arquivo inválido.');}
     event.target.value='';
   };
@@ -813,6 +974,73 @@ function importJSON(event){
 }
 
 // ═══ DESMOBILIZAÇÃO — RENDER ══════════════════════════════════
+function renderDesPanelInner(ditem,parentId){
+  const mobColor=ditem.mobStatus==='ok'?'badge-ok':ditem.mobStatus==='nok'?'badge-nok':'badge-na';
+  const mobLbl=ditem.mobStatus==='ok'?'Conf.':ditem.mobStatus==='nok'?'C/Defeito':'Não necessário';
+  return `
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;font-size:.75rem;color:var(--sub);">
+          <span>Mobilização:</span>
+          <span style="font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:20px;" class="${mobColor}">${mobLbl}</span>
+          ${ditem.unitId?`<span style="font-size:.68rem;font-weight:600;color:var(--royal);">· ${esc(ditem.unitId)}</span>`:''}
+        </div>
+
+        <div class="panel-section">1. Desmobilização</div>
+        <div class="yn-row">
+          <span class="yn-label">Foi desmobilizado?</span>
+          <div class="yn-btns">
+            <button class="yn-btn des-yes${ditem.desmobilized===true?' sel-yes':''}" onclick="setDesmobilized(${ditem.id},${parentId?parentId:'null'},true)">Sim</button>
+            <button class="yn-btn${ditem.desmobilized===false?' sel-no':''}"          onclick="setDesmobilized(${ditem.id},${parentId?parentId:'null'},false)">Não</button>
+          </div>
+        </div>
+
+        <div class="panel-section">2. Classificação</div>
+        <div class="status-btns two">
+          <button class="sbtn${ditem.status==='ok'?' sel-ok':''}"  onclick="setDesmobStatus(${ditem.id},${parentId?parentId:'null'},'ok')">
+            <span class="sicon">✅</span>Conforme
+          </button>
+          <button class="sbtn${ditem.status==='nok'?' sel-nok':''}" onclick="setDesmobStatus(${ditem.id},${parentId?parentId:'null'},'nok')">
+            <span class="sicon">❌</span>Não Conforme
+          </button>
+        </div>
+
+        <div class="obs-box${ditem.status==='nok'?' show':''}">
+          <div class="obs-label">⚠️ Descrição do problema</div>
+          <textarea placeholder="Descreva o problema encontrado no retorno…" oninput="onDesmobObs(${ditem.id},${parentId?parentId:'null'},this.value)">${esc(ditem.obs)}</textarea>
+        </div>
+
+        <div class="item-actions">
+          <button class="btn-clear-item" onclick="clearDesmobItem(${ditem.id},${parentId?parentId:'null'})">↺ Limpar</button>
+        </div>`;
+}
+function renderDesSubitemsSection(ditem){
+  const kids=ditem.children||[];
+  if(!kids.length)return '';
+  let kidsHtml='';
+  kids.forEach(child=>{
+    const idTag=child.unitId?`<span class="item-id-tag" title="${esc(child.unitId)}">${esc(child.unitId)}</span>`:'';
+    kidsHtml+=`
+      <div class="subitem item des-item ${desComboClass(child)}" data-id="${child.id}" data-parent="${ditem.id}">
+        <div class="subitem-row" onclick="toggleItem(this,event)">
+          <span class="subitem-tag">×${child.qty??1}</span>
+          <div class="subitem-name">${esc(child.name)}</div>
+          ${idTag}
+          <span class="combo-badge ${desComboBadgeClass(child)}">${desComboLabel(child)}</span>
+          <span class="item-chevron">▾</span>
+        </div>
+        <div class="subitem-panel item-panel" style="display:none;">
+          ${renderDesPanelInner(child,ditem.id)}
+        </div>
+      </div>`;
+  });
+  return `
+        <div class="subitems-section">
+          <div class="subitems-head">
+            <span class="panel-section">🧰 Subitens</span>
+            <span class="subitems-count">${kids.length}</span>
+          </div>
+          <div class="subitems-list">${kidsHtml}</div>
+        </div>`;
+}
 function renderDesmob(){
   const hasData=desmobState?.items?.length>0;
   document.getElementById('des-import-zone').style.display=hasData?'none':'block';
@@ -828,73 +1056,50 @@ function renderDesmob(){
 
   const list=document.getElementById('des-items-list');
   const expanded=new Set();
-  list.querySelectorAll('.item.expanded').forEach(el=>expanded.add(+el.dataset.id));
+  list.querySelectorAll('.item.expanded').forEach(el=>expanded.add(el.dataset.id+'|'+(el.dataset.parent||'')));
   list.innerHTML='';
 
   desmobState.items.forEach((ditem,idx)=>{
-    const isExp=expanded.has(ditem.id);
+    const isExp=expanded.has(ditem.id+'|');
     const el=document.createElement('div');
     el.className=`item des-item ${desComboClass(ditem)}${isExp?' expanded':''}`;
     el.dataset.id=ditem.id;
     const mobColor=ditem.mobStatus==='ok'?'badge-ok':ditem.mobStatus==='nok'?'badge-nok':'badge-na';
     const mobLbl=ditem.mobStatus==='ok'?'Conf.':ditem.mobStatus==='nok'?'C/Defeito':'Não necessário';
     const idTag=ditem.unitId?`<span class="item-id-tag" title="${esc(ditem.unitId)}">${esc(ditem.unitId)}</span>`:'';
+    const kidCount=ditem.children&&ditem.children.length?`<span class="item-qty-tag" title="Subitens">🧰 ${ditem.children.length}</span>`:'';
 
     el.innerHTML=`
-      <div class="item-row" onclick="toggleDesmobItem(this,event)">
+      <div class="item-row" onclick="toggleItem(this,event)">
         <div class="item-num">${String(idx+1).padStart(2,'0')}</div>
         <div class="item-name-wrap"><div class="item-name-div">${esc(ditem.name)}</div></div>
         ${idTag}
+        ${kidCount}
         <span class="item-qty-tag">×${ditem.qty}</span>
         <span class="combo-badge ${desComboBadgeClass(ditem)}">${desComboLabel(ditem)}</span>
         <span class="item-chevron">▾</span>
       </div>
       <div class="item-panel">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;font-size:.75rem;color:var(--sub);">
-          <span>Mobilização:</span>
-          <span style="font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:20px;" class="${mobColor}">${mobLbl}</span>
-          ${ditem.unitId?`<span style="font-size:.68rem;font-weight:600;color:var(--royal);">· ${esc(ditem.unitId)}</span>`:''}
-        </div>
-
-        <div class="panel-section">1. Desmobilização</div>
-        <div class="yn-row">
-          <span class="yn-label">Foi desmobilizado?</span>
-          <div class="yn-btns">
-            <button class="yn-btn des-yes${ditem.desmobilized===true?' sel-yes':''}" onclick="setDesmobilized(${ditem.id},true)">Sim</button>
-            <button class="yn-btn${ditem.desmobilized===false?' sel-no':''}"          onclick="setDesmobilized(${ditem.id},false)">Não</button>
-          </div>
-        </div>
-
-        <div class="panel-section">2. Classificação</div>
-        <div class="status-btns two">
-          <button class="sbtn${ditem.status==='ok'?' sel-ok':''}"  onclick="setDesmobStatus(${ditem.id},'ok')">
-            <span class="sicon">✅</span>Conforme
-          </button>
-          <button class="sbtn${ditem.status==='nok'?' sel-nok':''}" onclick="setDesmobStatus(${ditem.id},'nok')">
-            <span class="sicon">❌</span>Não Conforme
-          </button>
-        </div>
-
-        <div class="obs-box${ditem.status==='nok'?' show':''}">
-          <div class="obs-label">⚠️ Descrição do problema</div>
-          <textarea placeholder="Descreva o problema encontrado no retorno…" oninput="onDesmobObs(${ditem.id},this.value)">${esc(ditem.obs)}</textarea>
-        </div>
-
-        <div class="item-actions">
-          <button class="btn-clear-item" onclick="clearDesmobItem(${ditem.id})">↺ Limpar</button>
-        </div>
+        ${renderDesPanelInner(ditem,null)}
+        ${renderDesSubitemsSection(ditem)}
       </div>`;
     list.appendChild(el);
+    (ditem.children||[]).forEach(child=>{
+      if(expanded.has(child.id+'|'+ditem.id)){
+        const subEl=el.querySelector(`.subitem[data-id="${child.id}"]`);
+        if(subEl)subEl.classList.add('expanded');
+      }
+    });
   });
   updateDesmobProgress();
 }
 
 function updateDesmobProgress(){
   if(!desmobState)return;
-  const dd={ok:0,nok:0,pend:0};
-  const des=desmobState.items.filter(i=>i.desmobilized===true).length;
-  desmobState.items.forEach(i=>{if(i.status==='ok')dd.ok++;else if(i.status==='nok')dd.nok++;else dd.pend++;});
-  const n=Math.max(desmobState.items.length,1);
+  const dd=desCounts(desmobState.items);
+  const flat=flattenAll(desmobState.items);
+  const des=flat.filter(i=>i.desmobilized===true).length;
+  const n=Math.max(flat.length,1);
   document.getElementById('des-seg-ok').style.width =(dd.ok /n*100)+'%';
   document.getElementById('des-seg-nok').style.width=(dd.nok/n*100)+'%';
   document.getElementById('des-chips').innerHTML=`
@@ -902,63 +1107,55 @@ function updateDesmobProgress(){
     <div class="chip"><div class="chip-dot cdok" style="background:var(--ok)"></div>${dd.ok} Conf.</div>
     <div class="chip"><div class="chip-dot cdnok"></div>${dd.nok} N.Conf.</div>
     <div class="chip"><div class="chip-dot cdpend"></div>${dd.pend} Pend.</div>`;
-  document.getElementById('des-count-pill').textContent=`${desmobState.items.length} item${desmobState.items.length!==1?'s':''}`;
+  document.getElementById('des-count-pill').textContent=`${flat.length} item${flat.length!==1?'s':''}`;
 }
 
 // ═══ DESMOBILIZAÇÃO — INTERACTIONS ═══════════════════════════
-function toggleDesmobItem(rowEl,e){
-  if(e.target.closest('button')||e.target.closest('input')||e.target.closest('textarea'))return;
-  rowEl.closest('.item')?.classList.toggle('expanded');
-}
-function refreshDesmobItemUI(ditem){
-  const el=document.querySelector(`[data-id="${ditem.id}"]`);
+function refreshDesmobItemUI(ditem,parentEl){
+  const el=parentEl||document.querySelector(`.item[data-id="${ditem.id}"]:not(.subitem)`);
   if(!el){renderDesmob();return;}
   el.className=el.className.replace(/dcombo-\S+/g,'').trim();
   el.classList.add(desComboClass(ditem));
   if(el.classList.contains('expanded'))el.classList.add('expanded');
-  const badge=el.querySelector('.combo-badge');
-  badge.className=`combo-badge ${desComboBadgeClass(ditem)}`;
-  badge.textContent=desComboLabel(ditem);
-  const ynBtns=el.querySelectorAll('.yn-btn');
+  const badge=el.querySelector(':scope > .item-row .combo-badge, :scope > .subitem-row .combo-badge');
+  if(badge){
+    badge.className=`combo-badge ${desComboBadgeClass(ditem)}`;
+    badge.textContent=desComboLabel(ditem);
+  }
+  const ynBtns=el.querySelectorAll(':scope > .item-panel .yn-btn, :scope > .subitem-panel .yn-btn');
   if(ynBtns.length===2){
     ynBtns[0].className='yn-btn des-yes'+(ditem.desmobilized===true?' sel-yes':'');
     ynBtns[1].className='yn-btn'+(ditem.desmobilized===false?' sel-no':'');
   }
-  el.querySelectorAll('.sbtn').forEach(b=>b.className='sbtn');
-  if(ditem.status==='ok') el.querySelectorAll('.sbtn')[0].classList.add('sel-ok');
-  if(ditem.status==='nok')el.querySelectorAll('.sbtn')[1].classList.add('sel-nok');
-  const ob=el.querySelector('.obs-box');
+  const sbtns=el.querySelectorAll(':scope > .item-panel .sbtn, :scope > .subitem-panel .sbtn');
+  sbtns.forEach(b=>b.className='sbtn');
+  if(ditem.status==='ok'&&sbtns[0]) sbtns[0].classList.add('sel-ok');
+  if(ditem.status==='nok'&&sbtns[1])sbtns[1].classList.add('sel-nok');
+  const ob=el.querySelector(':scope > .item-panel .obs-box, :scope > .subitem-panel .obs-box');
   if(ob){ob.classList.toggle('show',ditem.status==='nok');if(ditem.status!=='nok'){const ta=ob.querySelector('textarea');if(ta)ta.value='';}}
   if(ditem.status==='nok'&&ob){const ta=ob.querySelector('textarea');if(ta)setTimeout(()=>ta.focus(),60);}
   updateDesmobProgress();
 }
-function setDesmobilized(id,val){
+function setDesmobilized(id,parentId,val){
   if(!desmobState)return;
-  const d=desmobState.items.find(i=>i.id===id);if(!d)return;
+  const d=findDesItem(desmobState.items,parentId,id);if(!d)return;
   d.desmobilized=d.desmobilized===val?null:val;
-  saveDesmob();refreshDesmobItemUI(d);
+  saveDesmob();refreshDesmobItemUI(d,document.querySelector(parentId?`.subitem[data-id="${id}"][data-parent="${parentId}"]`:`.item[data-id="${id}"]:not(.subitem)`));
 }
-function setDesmobStatus(id,status){
+function setDesmobStatus(id,parentId,status){
   if(!desmobState)return;
-  const d=desmobState.items.find(i=>i.id===id);if(!d)return;
+  const d=findDesItem(desmobState.items,parentId,id);if(!d)return;
   d.status=d.status===status?null:status;
   if(d.status!=='nok')d.obs='';
-  saveDesmob();refreshDesmobItemUI(d);
+  saveDesmob();refreshDesmobItemUI(d,document.querySelector(parentId?`.subitem[data-id="${id}"][data-parent="${parentId}"]`:`.item[data-id="${id}"]:not(.subitem)`));
 }
-function onDesmobObs(id,val){if(!desmobState)return;const d=desmobState.items.find(i=>i.id===id);if(d){d.obs=val;saveDesmob();}}
-function clearDesmobItem(id){
+function onDesmobObs(id,parentId,val){if(!desmobState)return;const d=findDesItem(desmobState.items,parentId,id);if(d){d.obs=val;saveDesmob();}}
+function clearDesmobItem(id,parentId){
   if(!desmobState)return;
-  const d=desmobState.items.find(i=>i.id===id);if(!d)return;
+  const d=findDesItem(desmobState.items,parentId,id);if(!d)return;
   d.status=null;d.desmobilized=null;d.obs='';saveDesmob();
-  const el=document.querySelector(`[data-id="${id}"]`);
-  if(!el){renderDesmob();return;}
-  el.className=el.className.replace(/dcombo-\S+/g,'').trim()+' dcombo-pend expanded';
-  const badge=el.querySelector('.combo-badge');badge.className='combo-badge cb-dpend';badge.textContent='Não preenchido';
-  const ynBtns=el.querySelectorAll('.yn-btn');
-  ynBtns.forEach(b=>{b.className=b.className.replace(/\bsel-yes\b|\bsel-no\b/g,'').trim();});
-  el.querySelectorAll('.sbtn').forEach(b=>b.className='sbtn');
-  const ob=el.querySelector('.obs-box');if(ob){ob.classList.remove('show');const ta=ob.querySelector('textarea');if(ta)ta.value='';}
-  updateDesmobProgress();toast('Limpo ✓');
+  renderDesmob();
+  toast('Limpo ✓');
 }
 function resetDesmob(){
   if(!confirm('Limpar tudo e remover o checklist importado?'))return;
@@ -998,8 +1195,9 @@ function generatePDF(){
   y+=30;
 
   const c=mobCounts(svc.items);
-  const mobN=svc.items.filter(i=>i.mobilized===true).length;
-  const total=svc.items.length;
+  const flat=flattenAll(svc.items);
+  const mobN=flat.filter(i=>i.mobilized===true).length;
+  const total=flat.length;
   const pw=(W-mg*2-12)/4;
   [[mobN,'Mobilizados',[29,90,158]],[c.ok,'Conforme',cOk],[c.nok,'Com Defeito',cNok],[c.pend,'Pend.',cMuted]].forEach(([cnt,lbl,col],i)=>{
     const px=mg+i*(pw+4);
@@ -1033,49 +1231,50 @@ function generatePDF(){
   };
   drawH();
 
-  svc.items.forEach((item,idx)=>{
+  let rowIdx=0;
+  const drawRow=(item,indent)=>{
+    const displayName=(indent?'↳ ':'')+item.name;
     const obsLines=item.obs?doc.splitTextToSize(item.obs,cOb-2):[];
-    const rh=Math.max(9,obsLines.length*4.8+6);
+    const nameLines=doc.splitTextToSize(displayName,cSt-3-indent);
+    const rh=Math.max(9,Math.max(obsLines.length,nameLines.length)*4.8+4);
     if(y+rh>H-18){
       doc.addPage();
       doc.setFillColor(...cInk);doc.rect(0,0,W,10,'F');
       doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(255,255,255);
       doc.text(`${svc.name} — continuação`,mg,7);y=18;drawH();
     }
-    doc.setFillColor(...(idx%2===0?cFrost:[255,255,255]));doc.rect(mg,y,W-mg*2,rh,'F');
+    doc.setFillColor(...(rowIdx%2===0?cFrost:[255,255,255]));doc.rect(mg,y,W-mg*2,rh,'F');
     doc.setDrawColor(...cLine);doc.rect(mg,y,W-mg*2,rh,'S');
     doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(...cMuted);
-    doc.text(String(idx+1).padStart(2,'0'),mg+2,y+rh/2+2);
+    doc.text(String(rowIdx+1).padStart(2,'0'),mg+2,y+rh/2+2);
     doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...cText);
     doc.text(String(item.qty??1),mg+cN+cQty/2+1,y+rh/2+2,{align:'center'});
-    // ID/Unidade
     if(item.unitId){
       doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(...cText);
       const uidLines=doc.splitTextToSize(item.unitId,cUID-3);
       doc.text(uidLines,mg+cN+cQty+2,y+5.5+(uidLines.length>1?0:1.5));
     }
-    // Mob badge
     const mc=item.mobilized===true?cOk:item.mobilized===false?cNok:cMuted;
     const ml=item.mobilized===true?'Sim':item.mobilized===false?'Não':'—';
     doc.setFillColor(...mc);doc.roundedRect(mg+cN+cQty+cUID+1,y+rh/2-3,cMob-3,6,1,1,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
     doc.text(ml,mg+cN+cQty+cUID+(cMob-3)/2+1,y+rh/2+1,{align:'center'});
-    // Classif badge
     const scc=item.status==='ok'?cOk:item.status==='na'?cAzure:item.status==='nok'?cNok:cMuted;
     const scl=item.status==='ok'?'Conforme':item.status==='na'?'N/A':item.status==='nok'?'C/Defeito':'Pend.';
     doc.setFillColor(...scc);doc.roundedRect(mg+cN+cQty+cUID+cMob+1,y+rh/2-3,cCl-3,6,1,1,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
     doc.text(scl,mg+cN+cQty+cUID+cMob+(cCl-3)/2+1,y+rh/2+1,{align:'center'});
-    // Name
-    doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(...cText);
-    const nLines=doc.splitTextToSize(item.name,cSt-3);
-    doc.text(nLines,mg+cN+cQty+cUID+cMob+cCl+2,y+5.5+(nLines.length>1?0:1.5));
-    // Obs
+    doc.setFont('helvetica',indent?'italic':'normal');doc.setFontSize(indent?7.8:8.5);doc.setTextColor(...(indent?cMuted:cText));
+    doc.text(nameLines,mg+cN+cQty+cUID+cMob+cCl+2+indent,y+5.5+(nameLines.length>1?0:1.5));
     if(obsLines.length&&item.obs){
       doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(...cText);
       doc.text(obsLines,mg+cN+cQty+cUID+cMob+cCl+cSt+2,y+5.5);
     }
-    y+=rh;
+    y+=rh;rowIdx++;
+  };
+  svc.items.forEach(item=>{
+    drawRow(item,0);
+    (item.children||[]).forEach(child=>drawRow(child,4));
   });
 
   const pages=doc.getNumberOfPages();
@@ -1116,10 +1315,10 @@ function generateDesmobPDF(){
   });
   y+=30;
 
-  const dd={ok:0,nok:0,pend:0};
-  const desN=desmobState.items.filter(i=>i.desmobilized===true).length;
-  desmobState.items.forEach(i=>{if(i.status==='ok')dd.ok++;else if(i.status==='nok')dd.nok++;else dd.pend++;});
-  const total=desmobState.items.length;
+  const dd=desCounts(desmobState.items);
+  const flat=flattenAll(desmobState.items);
+  const desN=flat.filter(i=>i.desmobilized===true).length;
+  const total=flat.length;
   const pw=(W-mg*2-12)/4;
   [[desN,'Desmobilizados',cAmb],[dd.ok,'Conforme',cOk],[dd.nok,'Não Conforme',cNok],[dd.pend,'Pendente',cMuted]].forEach(([cnt,lbl,col],i)=>{
     const px=mg+i*(pw+4);
@@ -1152,48 +1351,50 @@ function generateDesmobPDF(){
   };
   drawH();
 
-  desmobState.items.forEach((ditem,idx)=>{
+  let rowIdx=0;
+  const drawRow=(ditem,indent)=>{
+    const displayName=(indent?'↳ ':'')+ditem.name;
     const obsLines=ditem.obs?doc.splitTextToSize(ditem.obs,cOb-2):[];
-    const rh=Math.max(9,obsLines.length*4.8+6);
+    const nameLines=doc.splitTextToSize(displayName,cSt-3-indent);
+    const rh=Math.max(9,Math.max(obsLines.length,nameLines.length)*4.8+4);
     if(y+rh>H-18){
       doc.addPage();
       doc.setFillColor(...cBg);doc.rect(0,0,W,10,'F');
       doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(255,255,255);
       doc.text(`Desmobilização: ${desmobState.sourceName||'—'} — continuação`,mg,7);y=18;drawH();
     }
-    doc.setFillColor(...(idx%2===0?cFrost:[255,255,255]));doc.rect(mg,y,W-mg*2,rh,'F');
+    doc.setFillColor(...(rowIdx%2===0?cFrost:[255,255,255]));doc.rect(mg,y,W-mg*2,rh,'F');
     doc.setDrawColor(...cLine);doc.rect(mg,y,W-mg*2,rh,'S');
     doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(...cMuted);
-    doc.text(String(idx+1).padStart(2,'0'),mg+2,y+rh/2+2);
+    doc.text(String(rowIdx+1).padStart(2,'0'),mg+2,y+rh/2+2);
     doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...cText);
     doc.text(String(ditem.qty??1),mg+cN+cQty/2+1,y+rh/2+2,{align:'center'});
-    // ID/Unidade
     if(ditem.unitId){
       doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(...cText);
       const uidLines=doc.splitTextToSize(ditem.unitId,cUID-3);
       doc.text(uidLines,mg+cN+cQty+2,y+5.5+(uidLines.length>1?0:1.5));
     }
-    // Desm badge
     const dc=ditem.desmobilized===true?cOk:ditem.desmobilized===false?cNok:cMuted;
     const dl=ditem.desmobilized===true?'Sim':ditem.desmobilized===false?'Não':'—';
     doc.setFillColor(...dc);doc.roundedRect(mg+cN+cQty+cUID+1,y+rh/2-3,cDes-3,6,1,1,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
     doc.text(dl,mg+cN+cQty+cUID+(cDes-3)/2+1,y+rh/2+1,{align:'center'});
-    // Classif badge
     const sc=ditem.status==='ok'?cOk:ditem.status==='nok'?cNok:cMuted;
     const sl=ditem.status==='ok'?'Conforme':ditem.status==='nok'?'N.Conforme':'Pend.';
     doc.setFillColor(...sc);doc.roundedRect(mg+cN+cQty+cUID+cDes+1,y+rh/2-3,cCl-3,6,1,1,'F');
     doc.setFont('helvetica','bold');doc.setFontSize(6.5);doc.setTextColor(255,255,255);
     doc.text(sl,mg+cN+cQty+cUID+cDes+(cCl-3)/2+1,y+rh/2+1,{align:'center'});
-    // Name
-    doc.setFont('helvetica','normal');doc.setFontSize(8.5);doc.setTextColor(...cText);
-    const nLines=doc.splitTextToSize(ditem.name,cSt-3);
-    doc.text(nLines,mg+cN+cQty+cUID+cDes+cCl+2,y+5.5+(nLines.length>1?0:1.5));
+    doc.setFont('helvetica',indent?'italic':'normal');doc.setFontSize(indent?7.8:8.5);doc.setTextColor(...(indent?cMuted:cText));
+    doc.text(nameLines,mg+cN+cQty+cUID+cDes+cCl+2+indent,y+5.5+(nameLines.length>1?0:1.5));
     if(obsLines.length&&ditem.obs){
       doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(...cText);
       doc.text(obsLines,mg+cN+cQty+cUID+cDes+cCl+cSt+2,y+5.5);
     }
-    y+=rh;
+    y+=rh;rowIdx++;
+  };
+  desmobState.items.forEach(ditem=>{
+    drawRow(ditem,0);
+    (ditem.children||[]).forEach(child=>drawRow(child,4));
   });
 
   const pages=doc.getNumberOfPages();
